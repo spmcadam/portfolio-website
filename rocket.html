@@ -106,11 +106,9 @@ async function runSimulation() {
   const burn  = document.getElementById("perc_burntime2").value;
   const coast = document.getElementById("coast_time").value;
 
-  const command = `
-  from pyscript import Element
+  const command = `from pyscript import Element
   result = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
-  Element("plot-container").write(result)
-  `;
+  Element("plot-container").write(result)`;
 
   try {
     await pyscript.interpreter.run(command);
