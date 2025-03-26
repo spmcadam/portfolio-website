@@ -1,0 +1,338 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+body {
+    background-color: #1f1e1e; /* or any color you like */
+  }
+/*********************************************
+  Banner
+*********************************************/
+
+.banner {
+    position: relative;
+    /* Keep your chosen background and overlay settings */
+    background: url("images/seattleatnight.jpg") no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 8rem 1rem;
+    overflow: hidden;
+  
+    /* Remove or override center alignment; we’ll use flex to position content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.banner::before {
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65); /* overlay */
+    z-index: 1;
+  }
+
+.banner-content {
+    position: relative;
+    z-index: 2;           /* sits above the overlay */
+    display: flex;        /* place text and contact side by side */
+    flex-wrap: wrap;      /* allows wrapping on smaller screens */
+    justify-content: space-between;
+    width: 90%;           /* make content narrower than full width */
+    max-width: 1200px;    /* limit maximum width on large screens */
+  }
+
+/* Main text area on the left */
+.banner-text {
+    flex: 3; /* bigger portion of space for text */
+    min-width: 250px;
+    margin-right: 2rem; /* space between text and contact info */
+  }
+
+/* Contact info area on the right */
+.banner-contact {
+    flex: 1;
+    min-width: 200px;
+    text-align: right; /* align text to the right */
+    margin-top:5rem;
+  }
+
+  
+.banner-text h1 {
+    font-size: 2rem;
+    margin-top: 0; 
+    margin-bottom: 1rem;
+  }
+
+.banner-text p {
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    width: 100%; /* you can remove width or set something else if you like */
+  }
+
+/* Style the contact info text, if desired */
+.banner-contact p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+
+/* Make sure links in the banner are readable (white) */
+.banner-contact a, .banner-text a {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+@media (max-width: 768px) {
+    .banner-content {
+      flex-direction: column;
+      align-items: center; /* center them vertically */
+    }
+    .banner-text, .banner-contact {
+      margin-right: 0;
+      text-align: center; /* center each block's text on mobile */
+    }
+    .banner-contact {
+      margin-top: 2rem; /* spacing between text block and contact block */
+    }
+  }
+
+  
+/*********************************************
+  Link Triplet
+*********************************************/
+
+.links-container {
+  display: flex;
+  justify-content: center; /* centers the group horizontally */
+  gap: 2rem;              /* spacing between each link-item */
+  margin: 4rem auto;      /* some vertical spacing */
+  max-width: 1200px;      /* optional, keeps them from stretching too wide */
+  padding: 0 1rem;        /* small horizontal padding for smaller screens */
+}
+
+.link-item {
+  flex: 1;
+  min-width: 200px;       /* ensures each item doesn’t get too narrow */
+  text-align: center;     /* center the heading, text, and link */
+  background: #f7f7f7;    /* optional: a light background for contrast */
+  border-radius: 4px;     /* optional: slightly rounded corners */
+  padding: 2rem 1rem;     /* space inside each item */
+  box-shadow: 0 0 4px rgba(0,0,0,0.1); /* optional subtle shadow */
+}
+
+.link-item h2 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.link-item p {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.link-button {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  background: #333;    /* dark background for the button */
+  padding: 0.5rem 1rem;
+  border-radius: 4px;  /* optional: round corners */
+  transition: background 0.3s;
+}
+
+.link-button:hover {
+  background: #555;    /* slightly lighter/darker on hover */
+}
+
+/* Responsive: stack the links in a column on smaller screens */
+@media (max-width: 768px) {
+  .links-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .link-item {
+    width: 80%;       /* make them narrower so each doesn't take the full width */
+    margin-bottom: 2rem;
+  }
+}
+
+
+/*********************************************
+  Shared Slider Styles
+*********************************************/
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .slide {
+    position: absolute;    /* so slides stack in the same spot */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    opacity: 0;           /* hidden by default */
+    transition: opacity 1s ease-in-out;
+    display: flex;         /* so we can position elements easily inside if needed */
+    justify-content: center;    /* optional: center the button horizontally */
+    align-items: center;        /* optional: center the button vertically */
+  }
+  
+  /* The 'active' slide is fully visible */
+  .slide.active {
+    opacity: 1;
+  }
+  
+  /* The image inside the slide */
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* or contain, if you prefer no cropping */
+    position: absolute; /* ensures the image fills the background behind the button */
+    top: 0;
+    left: 0;
+  }
+  
+  /* The button that sits on top of the image */
+  .slide-button {
+    position: relative;    /* keeps the button above the absolutely positioned img */
+    z-index: 1;            /* ensure it’s above the image */
+    text-decoration: none;
+    color: #fff;
+    background: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 7s;
+  }
+  
+  .slide-button:hover {
+    background: #555;
+  }
+  
+  /* Responsive: on small screens, stack the text and slider vertically */
+  @media (max-width: 768px) {
+    .vertical-item {
+      flex-direction: column;
+    }
+    .vertical-slider {
+      width: 100%;
+      height: 200px; /* smaller slider for mobile if you want */
+    }
+  }
+
+  /*********************************************
+  Vertical Container
+*********************************************/
+.vertical-container {
+    display: flex;
+    flex-direction: column;  /* stack items vertically */
+    gap: 2rem;              /* spacing between each section */
+    margin: 2rem auto;      /* center them on the page with top/bottom margin */
+    max-width: 1200px;      /* optional limit to wide screens */
+    padding: 0 1rem;        /* horizontal padding for smaller screens */
+  }
+  
+  /*********************************************
+    Each "vertical-item"
+  *********************************************/
+  .vertical-item {
+    display: flex;
+    flex-direction: row; /* text on the left, slider on the right */
+    background: #3f3f3f; /* example light background */
+    border-radius: 4px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.1);
+  }
+ 
+  .vertical-item:nth-of-type(2) {
+    flex-direction: row-reverse;
+  }
+   
+  /* Left side: text */
+  .vertical-text {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;     
+    text-align: center;      
+  }
+  
+  .vertical-text h2 {
+    margin-bottom: 0.5rem;
+    color: #e8e8e8;
+  }
+  
+  .vertical-text p {
+    margin-bottom: 1rem;
+    color: #bababa;
+  }
+  
+  .vertical-link {
+    display: flex;                  /* use flex for centering */
+    justify-content: center;       /* center text horizontally */
+    align-items: center;           /* center text vertically */
+    text-align: center;
+  
+    color: #fff;
+    background: #333;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+  
+    /* Optional: fixed size for more uniform buttons */
+    height: 50px;
+    width: 160px;
+  
+    transition: background 0.3s;
+    text-decoration: none;
+  }
+  
+  .vertical-link:hover {
+    background: #555;
+  }
+  
+  /* Right side: slider container */
+  .vertical-slider {
+    flex: 1;
+    position: relative;
+    height: 250px; /* set a fixed or min-height for your slider area */
+    overflow: hidden;
+  }
+
+/*********************************************
+Footer
+*********************************************/
+.site-footer {
+background-color: #333;
+color: #fff;
+padding: 2rem 1rem;
+text-align: center;
+margin-top: 2rem;
+}
+
+.footer-container {
+max-width: 1200px;
+margin: 0 auto;
+}
+
+.footer-name {
+margin-bottom: 0.5rem;
+font-size: 1rem;
+font-weight: bold;
+}
+
+.footer-contact a, .footer-note a {
+color: #ffde59;
+text-decoration: none;
+}
+
+.footer-contact a:hover, .footer-note a:hover {
+text-decoration: underline;
+}
