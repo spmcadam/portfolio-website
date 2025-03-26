@@ -74,30 +74,51 @@
   </label>
 </div>
 
-<button onclick="runSimulation()">Run Simulation</button>
+<button id="run-btn" onclick="runSimulation()" disabled>Run Simulation</button>
 
+<div id="loading-indicator" style="display:none; font-weight:bold; margin-top: 1em;">
+  🚀 Running simulation, please wait...
+</div>
 <!-- 4) Container where the plot image will be inserted -->
 <div id="plot-container">
   <!-- Will display an <img> tag here after running simulation -->
 </div>
 
 <script>
-async function runSimulation() {
-  // Read parameter values from the form
-  const v0   = document.getElementById("vert_v0").value;
-  const p1   = document.getElementById("final_pitch_stage1").value;
-  const p2   = document.getElementById("final_pitch_stage2").value;
-  const burn = document.getElementById("perc_burntime2").value;
-  const coast= document.getElementById("coast_time").value;
+  // Enable the Run button once PyScript has fully loaded
+  document.addEventListener("pyscript:ready", () => {
+    document.getElementById("run-btn").disabled = false;
+    console.log("PyScript is ready.");
+  });
 
-  // Build a Python command string that calls run_simulation(...) in rocket.py
+async function runSimulation() {
+  const loadingEl = document.getElementById("loading-indicator");
+  const plotEl = document.getElementById("plot-container");
+
+  // Show the loading message
+  loadingEl.style.display = "block";
+  plotEl.innerHTML = "";  // Clear old plot if any
+
+  const v0    = document.getElementById("vert_v0").value;
+  const p1    = document.getElementById("final_pitch_stage1").value;
+  const p2    = document.getElementById("final_pitch_stage2").value;
+  const burn  = document.getElementById("perc_burntime2").value;
+  const coast = document.getElementById("coast_time").value;
+
   const command = `
     result = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
     pyscript.write("plot-container", result)
   `;
 
-  // Execute that command in PyScript's Python environment
-  await pyodide.runPythonAsync(command);
+  try {
+    await pyodide.runPythonAsync(command);
+  } catch (err) {
+    console.error("Simulation failed:", err);
+    plotEl.innerHTML = "<p style='color:red;'>Simulation failed. See console for details.</p>";
+  } finally {
+    // Hide the loading message
+    loadingEl.style.display = "none";
+  }
 }
 </script>
 
