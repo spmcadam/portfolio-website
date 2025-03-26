@@ -38,11 +38,13 @@
 </p>
 
 <!-- 1) PyScript environment: specify needed packages. -->
-<py-env>
-- numpy
-- pandas
-- matplotlib
-</py-env>
+<script type="py-env">
+packages = [
+  "numpy",
+  "pandas",
+  "matplotlib"
+]
+</script>
 
 <!-- 2) Load your rocket.py code but keep it hidden from view. -->
 <py-script src="rocket.py" hidden></py-script>
