@@ -86,18 +86,17 @@
 
 <script>
   // Enable the Run button once PyScript has fully loaded
-  document.addEventListener("pyscript:ready", () => {
-    document.getElementById("run-btn").disabled = false;
-    console.log("PyScript is ready.");
-  });
+document.addEventListener("pyscript:ready", () => {
+  document.getElementById("run-btn").disabled = false;
+  console.log("PyScript is ready.");
+});
 
 async function runSimulation() {
   const loadingEl = document.getElementById("loading-indicator");
   const plotEl = document.getElementById("plot-container");
 
-  // Show the loading message
   loadingEl.style.display = "block";
-  plotEl.innerHTML = "";  // Clear old plot if any
+  plotEl.innerHTML = "";
 
   const v0    = document.getElementById("vert_v0").value;
   const p1    = document.getElementById("final_pitch_stage1").value;
@@ -106,17 +105,17 @@ async function runSimulation() {
   const coast = document.getElementById("coast_time").value;
 
   const command = `
-    result = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
-    pyscript.write("plot-container", result)
+  from pyscript import Element
+  result = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
+  Element("plot-container").write(result)
   `;
 
   try {
-    await pyodide.runPythonAsync(command);
+    await pyscript.interpreter.run(command);
   } catch (err) {
     console.error("Simulation failed:", err);
     plotEl.innerHTML = "<p style='color:red;'>Simulation failed. See console for details.</p>";
   } finally {
-    // Hide the loading message
     loadingEl.style.display = "none";
   }
 }
