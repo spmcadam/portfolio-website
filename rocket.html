@@ -87,6 +87,14 @@ packages = [
 </div>
 
 <script>
+document.addEventListener("pyscript:ready", () => {
+  document.getElementById("run-btn").disabled = false;
+  console.log("PyScript initialized successfully.");
+});
+
+document.addEventListener("pyscript:error", (e) => {
+  console.error("PyScript initialization failed:", e.detail);
+});
   // Enable the Run button once PyScript has fully loaded
 document.addEventListener("pyscript:ready", () => {
   document.getElementById("run-btn").disabled = false;
