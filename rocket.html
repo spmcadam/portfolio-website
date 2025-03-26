@@ -97,7 +97,7 @@ async function runSimulation() {
   `;
 
   // Execute that command in PyScript's Python environment
-  await runPythonAsync(command);
+  await pyodide.runPythonAsync(command);
 }
 </script>
 
