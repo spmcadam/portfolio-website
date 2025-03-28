@@ -3,66 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <title>Rocket Simulation Demo</title>
-
+  <link rel="stylesheet" href="style.css">
   <!-- Load Pyodide from the recommended CDN -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js"></script>
 
   <style>
-    body {
-      font-family: sans-serif;
-      margin: 20px;
-    }
-    .param-row {
-      margin-bottom: 1em;
-    }
-    button {
-      margin-top: 1em;
-      padding: 0.5em 1em;
-    }
-    #plot-container {
-      margin-top: 2em;
-      text-align: left;
-    }
 
-    #plot-container img {
-      max-width: 100%;
-      max-height: 600px;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-    }
   </style>
 </head>
 <body>
 
-<!-- Banner -->
-<h1>Starship Launch Simulation</h1>
-<p>Enter parameters, then click "Run Simulation" to see the results:</p>
-<ul>
-  <li> 3D (currently static) Orbital Plot</li>
-  <li>Altitude vs Time</li>
-  <li>Velocity Components vs Time</li>
-  <li>Total Velocity vs Time</li>
-</ul>
+<!-- Intro -->
+<section class="about-me">
+  <div class="about-image">
+    <img src="images/starship.png" alt="About Me">
+  </div>
+  <div class="about-content">
+    <h2>Getting Starship to orbit</h2>
+    <p>
+      This page is from a project inspired by chapter 1 of "Computational Physics", a book 
+      we'll be working out of for the class of the same name in my last year of the Physics
+      BS program.
+    </p>
+    <p>
+      The code began as a simple 1D example where a rocket takes off and flies purely upward. 
+      It consisted of only "for" loops in Python and originally just used equations of motion 
+      with known paramaters for Starship.   
+    </p>
+    <p>
+      I then increased the complexity of the simulation, adding in elements for aerodynamic drag 
+      and moved to 2D. I also added in the stage separation event, and created separate events 
+      for the stage 2 initial burn, coast phase, and insertion burn. 
+    </p>
+    <p>
+      The last piece was moving to 3D, which for the sake of keeping the codebase slim, I've only 
+      included that portion here.
+    </p>
+    <p>
+      Below the simulation, I walk through the steps of putting this code together, and the 
+      physical consequences of each input.
+    </p>
+        <!-- Simulation parameters integrated into the about-me section -->
+        <div class="rocket-params">
+          <div class="param-row">
+            <label for="vert_v0">Vertical velocity before pitch (m/s):</label>
+            <input type="number" id="vert_v0" value="25" step="1" />
+          </div>
+          <div class="param-row">
+            <label for="perc_burntime2">% burntime stage2 (0.65 default):</label>
+            <input type="number" id="perc_burntime2" value="0.65" step="0.01" />
+          </div>
+          <div class="param-row">
+            <label for="coast_time">Coast time (s):</label>
+            <input type="number" id="coast_time" value="60" step="1" />
+          </div>
+          <button id="runButton" onclick="runSimulation()" disabled>Run Simulation</button>
+        </div>
+  </div>
 
-<!-- Simple form for parameters -->
-<div class="param-row">
-  <label>Vertical velocity before pitch (m/s):
-    <input type="number" id="vert_v0" value="25" step="1" />
-  </label>
-</div>
-<div class="param-row">
-  <label>% burntime stage2 (0.65 default):
-    <input type="number" id="perc_burntime2" value="0.65" step="0.01" />
-  </label>
-</div>
-<div class="param-row">
-  <label>Coast time (s):
-    <input type="number" id="coast_time" value="60" step="1" />
-  </label>
-</div>
+</section>
 
-<button id="runButton" onclick="runSimulation()" disabled>Run Simulation</button>
 
 <!-- Container where the plot image will be inserted -->
 <div id="plot-container">

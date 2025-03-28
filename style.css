@@ -7,6 +7,16 @@
 body {
     background-color: #1f1e1e; /* or any color you like */
   }
+
+/* Global  */
+p {
+  margin-bottom: 1rem; /* or 1.5rem, 24px, etc. */
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
 /*********************************************
   Banner
 *********************************************/
@@ -14,7 +24,7 @@ body {
 .banner {
     position: relative;
     /* Keep your chosen background and overlay settings */
-    background: url("images/seattleatnight.jpg") no-repeat center center;
+    background: url("images/seattlefromalki.jpg") no-repeat center center;
     background-size: cover;
     color: white;
     padding: 8rem 1rem;
@@ -235,7 +245,7 @@ body {
     flex-direction: column;  /* stack items vertically */
     gap: 2rem;              /* spacing between each section */
     margin: 2rem auto;      /* center them on the page with top/bottom margin */
-    max-width: 1200px;      /* optional limit to wide screens */
+    max-width: none;      /* optional limit to wide screens */
     padding: 0 1rem;        /* horizontal padding for smaller screens */
   }
   
@@ -306,6 +316,443 @@ body {
     overflow: hidden;
   }
 
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem; /* Adjust spacing as needed */
+  }
+/* About me section */
+.about-me {
+  display: flex;
+  width: 100%;
+  background-color: transparent;  /* You can adjust this background color */
+  padding: 2rem;
+  align-items: center;
+}
+
+.about-image {
+  flex: 0 0 33.33%;
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.about-content {
+  flex: 0 0 66.67%;
+  padding-left: 2rem; /* Creates space between the image and text */
+  color: #e8e8e8;    /* Adjust text color as needed */
+}
+
+.about-content h2 { 
+  margin-bottom: 1rem;
+}
+@media (max-width: 768px) {
+  .about-me {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .about-image,
+  .about-content {
+    flex: 1 1 100%;
+    padding: 0;
+  }
+  
+  .about-content {
+    margin-top: 1rem;
+  }
+}
+
+
+/* Full width image */
+.fullwidth-image-16x9 {
+  width: 100%;
+  overflow: hidden; /* Ensures any excess image content is clipped */
+  /* Optionally, enforce a 16:9 aspect ratio */
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 ratio (9/16 = 0.5625) */
+}
+
+.fullwidth-image-16x9 img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the container without distorting the image */
+}
+
+/*********************************************
+  Photo Collection Landing Page Styles
+*********************************************/
+
+/* Categories Section */
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.category {
+  width: 23%;
+  min-width: 220px;
+  height: 200px;
+  margin-bottom: 15px;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.category-content {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
+
+.category-content button {
+  margin-top: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/*********************************************
+  Full-width Slider
+*********************************************/
+.full-width-slider {
+  width: 100%;
+  height: 800px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.full-width-slider .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.full-width-slider .slide.active {
+  opacity: 1;
+}
+
+.full-width-slider .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*********************************************
+  Uncropped Image Pages (e.g. Landscapes)
+*********************************************/
+.new-slider {
+  width: 75%;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111; /* optional fallback background */
+}
+
+.uncropped-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.vertical-container.full-width {
+  max-width: 100%;   /* Remove width constraint */
+  padding: 0;        /* Remove padding if desired */
+}
+
+
+
+
+
+/*********************************************
+  My Story Page Styles
+*********************************************/
+
+/* 1) Banner with alternate background image 
+   - If you want a different image than "seattleatnight.jpg",
+     override it with .banner-alt 
+*/
+.banner-mystory {
+  background: url("images/firstmilkyway.jpg") no-repeat center center; 
+  background-size: cover;
+
+  /* Overwrite default center alignment, 
+     so text is top-left instead */
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 5rem 2rem; /* Space from top-left corner */
+  height: 600px;
+}
+
+/* Restrict text width to 1/3 on the alternate banner */
+.banner-mystory .banner-text {
+  flex: 1;
+  max-width: 33.33%;
+}
+
+.banner-mystory .banner-text p {
+  font-size: 0.9rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  width: 100%; /* you can remove width or set something else if you like */
+}
+
+/* 2) Two-column section */
+.two-column {
+  display: flex;
+  flex-wrap: wrap; /* so columns stack on small screens */
+  max-width: none;
+  margin: 2rem auto;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.two-column .column {
+  flex: 1;
+  min-width: 250px;
+  color: whitesmoke;
+}
+.two-column .column p {
+  font-size: 0.9rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  width: 95%; /* you can remove width or set something else if you like */
+}
+/* 3) Alternating layout 
+   - We reuse .vertical-item 
+   - row-reverse forces the image & text to swap sides 
+*/
+.row-reverse {
+  flex-direction: row-reverse !important; /* override the default row */
+}
+
+/* The text alignment for left/right side. 
+   .align-left => text is left-justified 
+   .align-right => text is right-justified 
+*/
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+/* 4) Full-width image with 16:9 aspect ratio 
+   - If you already have a wide image that is 16:9,
+     you can simply do a full width container. 
+   - Optionally enforce 16:9 with a container that has 
+     padding-bottom: 56.25% 
+*/
+.fullwidth-image-16x9 img {
+  display: block;   /* remove default inline spacing */
+  width: 100%;      /* span entire container width */
+  height: auto;     /* maintain aspect ratio */
+  /* If your source image is already 16:9, that’s enough. */
+}
+
+/* 5) Three-column section 
+   - Another flex layout for 3 columns 
+*/
+.three-column-section {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: none;
+  margin: 2rem auto;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.three-column-section .column {
+  flex: 1;
+  min-width: 220px;
+  background: #3f3f3f; /* Example background for contrast */
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+  color: whitesmoke;
+}
+
+
+/* Rotating gallery */
+.gallery-container {
+  position: relative;
+  max-width: none;  /* Adjust as needed */
+  height: 400px; /* Adjust as needed */
+  margin: 0 auto; /* Center the gallery on the page */
+}
+
+.image-container {
+  position: relative;
+  max-width: none;  /* adjust as needed */
+  height: 400px; /* adjust as needed */
+  overflow: hidden;
+}
+
+/* Base styling for all images */
+.image-container img {
+  position: absolute;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  width: 30%;  /* smaller for side images */
+  transform-origin: center center;
+  object-fit: contain;
+}
+
+/* Active (central) image: 50% larger and centered */
+.image-container img.active {
+  opacity: 1;
+  z-index: 2;
+  width: 45%;
+  left: 50%;
+  transform: translateX(-50%) scale(1.5);
+}
+
+/* Position the previous image on the left */
+.image-container img.prev {
+  left: 5%;
+  top: 25%;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+/* Position the next image on the right */
+.image-container img.next {
+  right: 5%;
+  top: 25%;
+  z-index: 1;
+  opacity: 0.5;
+}
+/* Only the image with the 'active' class is visible */
+.image-container img.active {
+  opacity: 1;
+}
+.image-container img.active:hover {
+  transform: translateX(-50%) scale(1.6);
+}
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2em;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+}
+.arrow.left {
+  left: 10px;
+}
+.arrow.right {
+  right: 10px;
+}
+
+/* New Section Container */
+.eight-twelve-section {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 2rem;
+  gap: 2rem;
+  height: 600px;
+}
+
+/* Left Column: Text */
+.eight-twelve-text {
+  flex: 0 0 25%;
+  color: #e8e8e8;
+  padding-right: 1rem;
+}
+
+/* Right Column: Slider */
+.eight-twelve-slider {
+  flex: 0 0 75%;
+  position: relative;
+  height: 100%;
+}
+
+/* Slider Container with 8×12 (2:3) Aspect Ratio */
+.eight-twelve-slider .slider-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Individual Slides */
+.eight-twelve-slider .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.eight-twelve-slider .slide.active {
+  opacity: 1;
+}
+
+/* Slide Images */
+.eight-twelve-slider .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin: auto;
+}
+
+/* Optional: Slider Arrows */
+.eight-twelve-slider .slider-arrows {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+}
+.eight-twelve-slider .slider-arrows .arrow {
+  font-size: 2em;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
 /*********************************************
 Footer
 *********************************************/
@@ -335,4 +782,64 @@ text-decoration: none;
 
 .footer-contact a:hover, .footer-note a:hover {
 text-decoration: underline;
+}
+
+
+/* Starship simulation */
+.rocket-params { 
+  margin-top: 1em;
+  background-color: #333;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+/* Each parameter row inside the simulation parameters container */
+.rocket-params .param-row {
+  margin-bottom: 1em;
+}
+
+/* Label styling within the simulation parameters container */
+.rocket-params label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+/* Input styling to ensure readability on a dark background */
+.rocket-params input {
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 0.25em;
+  width: 100%;
+  max-width: 200px;
+}
+
+/* Button styling for the simulation button */
+.rocket-params button {
+  background-color: #555;
+  color: #fff;
+  border: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+}
+
+/* Disabled button styling */
+.rocket-params button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Plot container styling */
+#plot-container {
+  margin-top: 2em;
+  text-align: left;
+}
+
+#plot-container img {
+  max-width: 100%;
+  max-height: 600px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
