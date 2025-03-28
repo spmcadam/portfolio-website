@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Rocket Simulation Demo</title>
 
-  <!-- Load Pyodide -->
+  <!-- Load Pyodide from the recommended CDN -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js"></script>
 
   <style>
@@ -35,10 +35,9 @@
   <li>Total Velocity vs Time</li>
 </ul>
 
-
 <!-- Simple form for parameters -->
 <div class="param-row">
-  <label>Vertical velocity before pitch (m/s): 
+  <label>Vertical velocity before pitch (m/s):
     <input type="number" id="vert_v0" value="25" step="1" />
   </label>
 </div>
@@ -71,12 +70,15 @@
 </div>
 
 <script>
-// Initialize Pyodide and store the instance globally
+// Initialize Pyodide, load required packages, and then load rocket.py into the global namespace
 async function initPyodide() {
   // Load Pyodide and assign the instance globally
   window.pyodideInstance = await loadPyodide();
   
-  // Fetch rocket.py file and run its code
+  // Load the required packages
+  await window.pyodideInstance.loadPackage(["numpy", "pandas", "matplotlib"]);
+  
+  // Fetch rocket.py from your server and run its code so that its definitions become global
   let rocketCode = await (await fetch("rocket.py")).text();
   window.pyodideInstance.runPython(rocketCode);
 }
@@ -91,18 +93,22 @@ async function runSimulation() {
   const burn  = document.getElementById("perc_burntime2").value;
   const coast = document.getElementById("coast_time").value;
 
-  // Build a multi-line Python command string that imports the rocket module and calls run_simulation
+  // Build a multi-line Python command string that calls run_simulation
+  // and then sets the innerHTML of the element with id "plot-container"
   const command = `
 result = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
-pyscript.write("plot-container", result)
+import js
+js.document.getElementById("plot-container").innerHTML = result
 `;
 
+  // Execute the Python code asynchronously using the loaded Pyodide instance
   await window.pyodideInstance.runPythonAsync(command);
 }
 </script>
 
 </body>
 </html>
+
 
 
 
