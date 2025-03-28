@@ -37,7 +37,7 @@
 </head>
 <body>
 
-<h1>Client-Side Rocket Launch Simulation</h1>
+<h1>Starship Launch Simulation</h1>
 <p>Enter parameters, then click "Run Simulation" to see the three vertical subplots:</p>
 <ul>
   <li>Altitude vs Time</li>
@@ -103,14 +103,13 @@ async function runSimulation() {
   const burn  = document.getElementById("perc_burntime2").value;
   const coast = document.getElementById("coast_time").value;
 
-  // Build a multi-line Python command string that calls your run_simulation(...) function
+  // Build a multi-line Python command string that imports the rocket module and calls run_simulation
   const command = `
-result = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
+import rocket
+result = rocket.run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
 pyscript.write("plot-container", result)
 `;
 
-  // Use the loaded Pyodide instance to run the Python code asynchronously.
-  // This call will execute your simulation and inject the <img> tag into the div.
   await window.pyodideInstance.runPythonAsync(command);
 }
 </script>
