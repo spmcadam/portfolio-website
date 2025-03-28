@@ -24,7 +24,7 @@
     <p>
       The code began as a simple 1D example where a rocket takes off and flies purely upward. 
       It consisted of only "for" loops in Python and originally just used equations of motion 
-      with known paramaters for Starship.   
+      with known parameters for Starship.   
     </p>
     <p>
       I then increased the complexity of the simulation, adding in elements for aerodynamic drag 
@@ -33,8 +33,20 @@
     </p>
     <p>
       The last piece was moving to 3D, which for the sake of keeping the codebase slim, I've only 
-      included that portion here.
+      included that portion here. At this current stage, the parameters are currently limited to 
+      what I've found to be the most sensitive to changes. 
     </p>
+    <li>
+      <strong>Vertical velocity before pitch change:</strong> how much the vertical velocity to gain from launch until
+      the rocket begins pitching over. 
+    </li>
+    <li>
+      <strong>Percentage of dV for stage 2:</strong> controls how much dV is spent for the initial 
+      stage 2 burn. The remainder will be spent after the specified coast time.
+    </li>
+    <li>
+      <strong>Coast time:</strong> how long is spent between the two burns of the second stage.
+    </li>
     <p>
       Below the simulation, I walk through the steps of putting this code together, and the 
       physical consequences of each input.
@@ -42,15 +54,15 @@
         <!-- Simulation parameters integrated into the about-me section -->
         <div class="rocket-params">
           <div class="param-row">
-            <label for="vert_v0">Vertical velocity before pitch (m/s):</label>
+            <label for="vert_v0">Vertical velocity before pitching over(m/s):</label>
             <input type="number" id="vert_v0" value="25" step="1" />
           </div>
           <div class="param-row">
-            <label for="perc_burntime2">% burntime stage2 (0.65 default):</label>
-            <input type="number" id="perc_burntime2" value="0.65" step="0.01" />
+            <label for="perc_burntime2">% dV for stage 2 burn 1:</label>
+            <input type="number" id="perc_burntime2" value="0.65" step="1" />
           </div>
           <div class="param-row">
-            <label for="coast_time">Coast time (s):</label>
+            <label for="coast_time">Coast time between stage 2 burns (s):</label>
             <input type="number" id="coast_time" value="60" step="1" />
           </div>
           <button id="runButton" onclick="runSimulation()" disabled>Run Simulation</button>
