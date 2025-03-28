@@ -4,9 +4,19 @@
   <meta charset="UTF-8">
   <title>Rocket Simulation Demo</title>
 
-  <!-- PyScript CSS/JS from the official CDN -->
+  <!-- Load Pyodide from the recommended CDN -->
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js"></script>
+
+  <!-- Optional: If you want to style the page with PyScript’s CSS, you can include it,
+       but note that if you don't use other PyScript tags, it isn’t required. -->
   <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+  <!-- PyScript environment (if you still need it for some PyScript-specific behavior) -->
+  <py-env>
+- numpy
+- pandas
+- matplotlib
+  </py-env>
 
   <style>
     body {
@@ -27,27 +37,18 @@
 </head>
 <body>
 
-<h1>Starship Launch Simulation</h1>
-<p>
-  Enter parameters, then click "Run Simulation":
-</p>
+<h1>Client-Side Rocket Launch Simulation</h1>
+<p>Enter parameters, then click "Run Simulation" to see the three vertical subplots:</p>
 <ul>
   <li>Altitude vs Time</li>
   <li>Velocity Components vs Time</li>
   <li>Total Velocity vs Time</li>
 </ul>
 
-<!-- 1) PyScript environment: specify needed packages. -->
-<py-env>
-  - numpy
-  - pandas
-  - matplotlib
-</py-env>
-
-<!-- 2) Load your rocket.py code but keep it hidden from view. -->
+<!-- Load your rocket.py code (if needed) -->
 <py-script src="rocket.py" hidden></py-script>
 
-<!-- 3) Simple form for parameters. -->
+<!-- Simple form for parameters -->
 <div class="param-row">
   <label>Vertical velocity before pitch (m/s): 
     <input type="number" id="vert_v0" value="25" step="1" />
@@ -76,12 +77,24 @@
 
 <button onclick="runSimulation()">Run Simulation</button>
 
-<!-- 4) Container where the plot image will be inserted -->
+<!-- Container where the plot image will be inserted -->
 <div id="plot-container">
-  <!-- Will display an <img> tag here after running simulation -->
+  <!-- The generated <img> tag will be inserted here -->
 </div>
 
 <script>
+// Initialize Pyodide and store the instance globally
+async function initPyodide() {
+  // Load Pyodide and assign it to a global variable
+  window.pyodideInstance = await loadPyodide();
+
+  // Optionally, load extra packages if needed.
+  // For example, you could use:
+  // await window.pyodideInstance.loadPackage(["numpy", "pandas", "matplotlib"]);
+}
+initPyodide();
+
+// Function to run the simulation when the button is clicked
 async function runSimulation() {
   // Read parameter values from the form
   const v0    = document.getElementById("vert_v0").value;
@@ -90,17 +103,20 @@ async function runSimulation() {
   const burn  = document.getElementById("perc_burntime2").value;
   const coast = document.getElementById("coast_time").value;
 
-  // Build a *multi-line* Python command string
+  // Build a multi-line Python command string that calls your run_simulation(...) function
   const command = `
 result = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
 pyscript.write("plot-container", result)
 `;
 
-  // Execute that command in PyScript's Python environment
-  await runPythonAsync(command);
+  // Use the loaded Pyodide instance to run the Python code asynchronously.
+  // This call will execute your simulation and inject the <img> tag into the div.
+  await window.pyodideInstance.runPythonAsync(command);
 }
 </script>
 
 </body>
 </html>
+
+
 
