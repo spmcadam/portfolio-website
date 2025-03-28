@@ -795,12 +795,15 @@ text-decoration: underline;
 
 /* Each parameter row inside the simulation parameters container */
 .rocket-params .param-row {
+  display: flex;
+  align-items: center;
   margin-bottom: 1em;
+  gap: 0.5em;
 }
 
 /* Label styling within the simulation parameters container */
 .rocket-params label {
-  display: block;
+  flex: 1;
   margin-bottom: 0.5em;
   font-weight: bold;
 }
