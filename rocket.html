@@ -4,19 +4,8 @@
   <meta charset="UTF-8">
   <title>Rocket Simulation Demo</title>
 
-  <!-- Load Pyodide from the recommended CDN -->
+  <!-- Load Pyodide -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js"></script>
-
-  <!-- Optional: If you want to style the page with PyScript’s CSS, you can include it,
-       but note that if you don't use other PyScript tags, it isn’t required. -->
-  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-
-  <!-- PyScript environment (if you still need it for some PyScript-specific behavior) -->
-  <py-env>
-- numpy
-- pandas
-- matplotlib
-  </py-env>
 
   <style>
     body {
@@ -37,6 +26,7 @@
 </head>
 <body>
 
+<!-- Banner -->
 <h1>Starship Launch Simulation</h1>
 <p>Enter parameters, then click "Run Simulation" to see the three vertical subplots:</p>
 <ul>
@@ -45,8 +35,6 @@
   <li>Total Velocity vs Time</li>
 </ul>
 
-<!-- Load your rocket.py code (if needed) -->
-<py-script src="rocket.py" hidden></py-script>
 
 <!-- Simple form for parameters -->
 <div class="param-row">
@@ -85,12 +73,12 @@
 <script>
 // Initialize Pyodide and store the instance globally
 async function initPyodide() {
-  // Load Pyodide and assign it to a global variable
+  // Load Pyodide and assign the instance globally
   window.pyodideInstance = await loadPyodide();
-
-  // Optionally, load extra packages if needed.
-  // For example, you could use:
-  // await window.pyodideInstance.loadPackage(["numpy", "pandas", "matplotlib"]);
+  
+  // Fetch rocket.py file and run its code
+  let rocketCode = await (await fetch("rocket.py")).text();
+  window.pyodideInstance.runPython(rocketCode);
 }
 initPyodide();
 
@@ -105,8 +93,7 @@ async function runSimulation() {
 
   // Build a multi-line Python command string that imports the rocket module and calls run_simulation
   const command = `
-import rocket
-result = rocket.run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
+result = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
 pyscript.write("plot-container", result)
 `;
 
