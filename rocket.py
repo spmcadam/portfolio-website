@@ -231,7 +231,7 @@ def simulate_gravity_turn_3d(vert_v0, perc_burntime2, coast_time):
             thrust_mag = (v_exhaust_stage2 * mdot_stage2)/mass_stage2_arr[i]
         else:
             thrust_mag = 0.0
-        thrust_dir = compute_thrust_direction_stage2(r_vec, v_vec,
+        thrust_dir = compute_thrust_direction_stage2(r_vec, v_vec, 90,
                                                           thrust_mag)
         thrust_acc = thrust_mag * thrust_dir
         g_local = GM/(r**2)
