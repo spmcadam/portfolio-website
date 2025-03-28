@@ -89,6 +89,9 @@ async function runSimulation() {
   const burn  = document.getElementById("perc_burntime2").value;
   const coast = document.getElementById("coast_time").value;
 
+  // Display the "Calculating..." message
+  document.getElementById("plot-container").innerHTML = "Calculating...";
+
   // Build a multi-line Python command string that calls run_simulation
   // and then sets the innerHTML of the element with id "plot-container"
   const command = `
