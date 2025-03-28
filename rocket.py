@@ -376,20 +376,77 @@ def simulate_gravity_turn_3d(vert_v0, perc_burntime2, coast_time):
 # --------------------------------------------
 #   FUNCTION TO PLOT 3 VERTICAL SUBPLOTS
 # --------------------------------------------
-def plot_three_vertical_subplots(df):
+def plot_combined_figure(df):
     """
-    Creates a single figure containing three vertical subplots:
-    1) Altitude vs. time
-    2) Velocity Components vs. time
-    3) Orbital velocity vs. time
-
+    Creates a combined figure with:
+      - A 3D trajectory plot on the left.
+      - Three vertical subplots on the right:
+           1) Altitude vs Time
+           2) Velocity Components vs Time
+           3) Orbital Velocity vs Time
     Returns a Base64-encoded <img> string.
     """
-    # Create figure with 3 subplots stacked vertically
-    fig, (ax1, ax2, ax3) = plt.subplots(nrows=3, ncols=1, figsize=(6, 8), dpi=100)
-    fig.tight_layout(pad=3)
+    # Create a figure with a grid layout: left column for 3D plot, right column for 3 subplots.
+    fig = plt.figure(figsize=(20, 10))
+    gs = fig.add_gridspec(3, 2, width_ratios=[2, 1], height_ratios=[1, 1, 1])
+    gs.update(hspace=0.5)  # Increase vertical spacing
 
-    # 1) Altitude vs. Time
+    # -------------------------------
+    # Left Column: 3D Trajectory Plot
+    # -------------------------------
+    ax3d = fig.add_subplot(gs[:, 0], projection='3d')
+    ax3d.set_title("3D Trajectory from Cape Canaveral")
+
+    # Plot Earth as a sphere
+    u = np.linspace(0, np.pi, 30)
+    v = np.linspace(0, 2 * np.pi, 30)
+    xsph = radius_earth * np.outer(np.sin(u), np.cos(v))
+    ysph = radius_earth * np.outer(np.sin(u), np.sin(v))
+    zsph = radius_earth * np.outer(np.cos(u), np.ones_like(v))
+    ax3d.plot_surface(xsph, ysph, zsph, color='blue', alpha=0.25, linewidth=0, edgecolor='none')
+
+    # Plot Cape Canaveral as a red "x"
+    ax3d.scatter(x0, y0, z0, color='red', marker='x', s=100, label='Cape Canaveral')
+
+    # Plot rocket trajectory by stage (without coastlines)
+    colors_map = {
+        'stage1': 'orange',
+        'stage2': 'blue',
+        'coast': 'red',
+        'stage2_part2': 'green'
+    }
+    for stage_name, group_data in df.groupby('stage'):
+        ax3d.plot(group_data['x'], group_data['y'], group_data['z'],
+                  color=colors_map.get(stage_name, 'black'),
+                  label=stage_name)
+    ax3d.legend()
+
+    # Set axis labels and limits
+    ax3d.set_xlabel("X (m)")
+    ax3d.set_ylabel("Y (m)")
+    ax3d.set_zlabel("Z (m)")
+    max_r = df['r'].max()
+    margin = 0.1 * max_r
+    ax3d.set_xlim([-max_r - margin, max_r + margin])
+    ax3d.set_ylim([-max_r - margin, max_r + margin])
+    ax3d.set_zlim([-max_r - margin, max_r + margin])
+
+    # Remove extra details for a cleaner look
+    ax3d.xaxis.pane.fill = False
+    ax3d.yaxis.pane.fill = False
+    ax3d.zaxis.pane.fill = False
+    ax3d.set_xticks([])
+    ax3d.set_yticks([])
+    ax3d.set_zticks([])
+    ax3d.grid(False)
+    ax3d._axis3don = False
+
+    # -------------------------------
+    # Right Column: Three Vertical Subplots
+    # -------------------------------
+
+    # 1) Altitude vs Time (Top row, right column)
+    ax1 = fig.add_subplot(gs[0, 1])
     alt = df['r'] - radius_earth
     ax1.plot(df['time'], alt, color='orange')
     ax1.set_ylim(0, 1.0e6)
@@ -401,7 +458,8 @@ def plot_three_vertical_subplots(df):
     ax1.axhline(y=iss_altitude, linestyle='--', color='gray', label='ISS ~420km')
     ax1.legend()
 
-    # 2) Velocity Components vs. Time
+    # 2) Velocity Components vs Time (Middle row, right column)
+    ax2 = fig.add_subplot(gs[1, 1])
     ax2.plot(df['time'], df['vel_x'], label='Vx')
     ax2.plot(df['time'], df['vel_y'], label='Vy')
     ax2.plot(df['time'], df['vel_z'], label='Vz')
@@ -411,7 +469,8 @@ def plot_three_vertical_subplots(df):
     ax2.grid(True)
     ax2.legend()
 
-    # 3) Total Orbital Velocity vs Time
+    # 3) Orbital Velocity vs Time (Bottom row, right column)
+    ax3 = fig.add_subplot(gs[2, 1])
     ax3.plot(df['time'], df['vel_orb'], color='blue')
     ax3.set_ylabel("Orbital Vel (m/s)")
     ax3.set_xlabel("Time (s)")
@@ -421,7 +480,9 @@ def plot_three_vertical_subplots(df):
     ax3.axhline(y=iss_vel_orb, linestyle='--', color='gray', label='ISS Orbital Vel')
     ax3.legend()
 
-    # Encode figure into Base64
+    # -------------------------------
+    # Encode Figure to Base64 for HTML Embedding
+    # -------------------------------
     buf = io.BytesIO()
     fig.savefig(buf, format='png')
     buf.seek(0)
@@ -443,7 +504,7 @@ def run_simulation(vert_str, burn2_str, coast_str):
     cst = float(coast_str)
 
     df = simulate_gravity_turn_3d(v0, b2, cst)
-    img_data = plot_three_vertical_subplots(df)
+    img_data = plot_combined_figure(df)
 
     # Return an HTML <img> with embedded base64 data
     return f"<img src='data:image/png;base64,{img_data}' />"
