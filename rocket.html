@@ -96,6 +96,7 @@ async function runSimulation() {
   // Build a multi-line Python command string that calls run_simulation
   // and then sets the innerHTML of the element with id "plot-container"
   const command = `
+from __main__ import run_simulation  
 result = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
 import js
 js.document.getElementById("plot-container").innerHTML = result
