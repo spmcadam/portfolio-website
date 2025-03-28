@@ -21,6 +21,7 @@
     }
     #plot-container {
       margin-top: 2em;
+      text-align: left;
     }
 
     #plot-container img {
@@ -36,8 +37,9 @@
 
 <!-- Banner -->
 <h1>Starship Launch Simulation</h1>
-<p>Enter parameters, then click "Run Simulation" to see the three vertical subplots:</p>
+<p>Enter parameters, then click "Run Simulation" to see the results:</p>
 <ul>
+  <li> 3D (currently static) Orbital Plot</li>
   <li>Altitude vs Time</li>
   <li>Velocity Components vs Time</li>
   <li>Total Velocity vs Time</li>
@@ -60,7 +62,7 @@
   </label>
 </div>
 
-<button onclick="runSimulation()">Run Simulation</button>
+<button id="runButton" onclick="runSimulation()" disabled>Run Simulation</button>
 
 <!-- Container where the plot image will be inserted -->
 <div id="plot-container">
@@ -79,6 +81,10 @@ async function initPyodide() {
   // Fetch rocket.py from your server and run its code so that its definitions become global
   let rocketCode = await (await fetch("rocket.py")).text();
   window.pyodideInstance.runPython(rocketCode);
+
+  // Enable the run button now that everything is loaded
+  document.getElementById("runButton").disabled = false;
+
 }
 initPyodide();
 
