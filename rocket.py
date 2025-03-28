@@ -58,8 +58,7 @@ dt = 0.1
 # ---------------------------------
 #   MAIN SIMULATION FUNCTION
 # ---------------------------------
-def simulate_gravity_turn_3d(vert_v0, final_pitch_stage1, final_pitch_stage2,
-                             perc_burntime2, coast_time):
+def simulate_gravity_turn_3d(vert_v0, perc_burntime2, coast_time):
     """
     3D multi-stage gravity turn from Cape Canaveral in ECI coords.
     Returns a DataFrame with columns: time, x, y, z, r, vel_x, vel_y, vel_z, etc.
@@ -162,7 +161,7 @@ def simulate_gravity_turn_3d(vert_v0, final_pitch_stage1, final_pitch_stage2,
         else:
             thrust_mag = 0.0
         thrust_dir = compute_thrust_direction(r_vec, v_vec,
-                                              final_pitch_stage1,
+                                              70,
                                               vert_v0,
                                               thrust_mag)
         thrust_acc = thrust_mag * thrust_dir
@@ -233,8 +232,7 @@ def simulate_gravity_turn_3d(vert_v0, final_pitch_stage1, final_pitch_stage2,
         else:
             thrust_mag = 0.0
         thrust_dir = compute_thrust_direction_stage2(r_vec, v_vec,
-                                                     final_pitch_stage2,
-                                                     thrust_mag)
+                                                          thrust_mag)
         thrust_acc = thrust_mag * thrust_dir
         g_local = GM/(r**2)
         grav_acc = -g_local*(r_vec/r)
@@ -434,19 +432,17 @@ def plot_three_vertical_subplots(df):
 # --------------------------------------------
 #   A HELPER TO RUN SIMULATION & RETURN <img>
 # --------------------------------------------
-def run_simulation(vert_str, pitch1_str, pitch2_str, burn2_str, coast_str):
+def run_simulation(vert_str, burn2_str, coast_str):
     """
     Called from your HTML/JS. Converts string inputs to floats,
     runs the rocket simulation, then returns the final 3-subplot
     figure as a base64-encoded <img> tag.
     """
     v0  = float(vert_str)
-    p1  = float(pitch1_str)
-    p2  = float(pitch2_str)
     b2  = float(burn2_str)
     cst = float(coast_str)
 
-    df = simulate_gravity_turn_3d(v0, p1, p2, b2, cst)
+    df = simulate_gravity_turn_3d(v0, b2, cst)
     img_data = plot_three_vertical_subplots(df)
 
     # Return an HTML <img> with embedded base64 data

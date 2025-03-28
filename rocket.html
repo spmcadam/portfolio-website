@@ -42,16 +42,6 @@
   </label>
 </div>
 <div class="param-row">
-  <label>Final pitch stage1 (deg):
-    <input type="number" id="final_pitch_stage1" value="70" step="1" />
-  </label>
-</div>
-<div class="param-row">
-  <label>Final pitch stage2 (deg):
-    <input type="number" id="final_pitch_stage2" value="90" step="1" />
-  </label>
-</div>
-<div class="param-row">
   <label>% burntime stage2 (0.65 default):
     <input type="number" id="perc_burntime2" value="0.65" step="0.01" />
   </label>
@@ -88,8 +78,6 @@ initPyodide();
 async function runSimulation() {
   // Read parameter values from the form
   const v0    = document.getElementById("vert_v0").value;
-  const p1    = document.getElementById("final_pitch_stage1").value;
-  const p2    = document.getElementById("final_pitch_stage2").value;
   const burn  = document.getElementById("perc_burntime2").value;
   const coast = document.getElementById("coast_time").value;
 
@@ -97,7 +85,7 @@ async function runSimulation() {
   // and then sets the innerHTML of the element with id "plot-container"
   const command = `
 from __main__ import run_simulation  
-result = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
+result = run_simulation('${v0}', '${burn}', '${coast}')
 import js
 js.document.getElementById("plot-container").innerHTML = result
 `;
