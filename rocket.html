@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Rocket Simulation Demo</title>
 
-  <!-- PyScript CSS/JS from the official CDN (Stable release) -->
-  <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
-  <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+  <!-- PyScript CSS/JS from the official CDN -->
+  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
 
   <style>
     body {
@@ -24,15 +24,6 @@
       margin-top: 2em;
     }
   </style>
-
-  <!-- Updated PyScript environment configuration -->
-  <py-config>
-    packages = ["numpy", "pandas", "matplotlib"]
-  </py-config>
-
-  <!-- Load your rocket.py code but keep it hidden from view -->
-  <py-script src="rocket.py" hidden></py-script>
-
 </head>
 <body>
 
@@ -46,7 +37,17 @@
   </ul>
 </p>
 
-<!-- Simple form for parameters -->
+<!-- 1) PyScript environment: specify needed packages. -->
+<py-env>
+- numpy
+- pandas
+- matplotlib
+</py-env>
+
+<!-- 2) Load your rocket.py code but keep it hidden from view. -->
+<py-script src="rocket.py" hidden></py-script>
+
+<!-- 3) Simple form for parameters. -->
 <div class="param-row">
   <label>Vertical velocity before pitch (m/s): 
     <input type="number" id="vert_v0" value="25" step="1" />
@@ -73,51 +74,30 @@
   </label>
 </div>
 
-<button id="run-btn" onclick="runSimulation()" disabled>Run Simulation</button>
+<button onclick="runSimulation()">Run Simulation</button>
 
-<div id="loading-indicator" style="display:none; font-weight:bold; margin-top: 1em;">
-  🚀 Running simulation, please wait...
-</div>
-
-<!-- Container where the plot image will be inserted -->
+<!-- 4) Container where the plot image will be inserted -->
 <div id="plot-container">
   <!-- Will display an <img> tag here after running simulation -->
 </div>
 
 <script>
-document.addEventListener("pyscript:ready", () => {
-  document.getElementById("run-btn").disabled = false;
-  console.log("PyScript initialized successfully.");
-});
-
-document.addEventListener("pyscript:error", (e) => {
-  console.error("PyScript initialization failed:", e.detail);
-  alert("PyScript failed to load. Check console for errors.");
-});
-
 async function runSimulation() {
-  const loadingEl = document.getElementById("loading-indicator");
-  const plotEl = document.getElementById("plot-container");
-
-  loadingEl.style.display = "block";
-  plotEl.innerHTML = "";
-
+  // Read parameter values from the form
   const v0    = document.getElementById("vert_v0").value;
   const p1    = document.getElementById("final_pitch_stage1").value;
   const p2    = document.getElementById("final_pitch_stage2").value;
   const burn  = document.getElementById("perc_burntime2").value;
   const coast = document.getElementById("coast_time").value;
 
-  const command = `from pyscript import Element\nresult = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')\nElement("plot-container").write(result)`;
+  // Build a *multi-line* Python command string
+  const command = `
+result = run_simulation('${v0}', '${p1}', '${p2}', '${burn}', '${coast}')
+pyscript.write("plot-container", result)
+`;
 
-  try {
-    await pyscript.interpreter.run(command);
-  } catch (err) {
-    console.error("Simulation failed:", err);
-    plotEl.innerHTML = "<p style='color:red;'>Simulation failed. See console for details.</p>";
-  } finally {
-    loadingEl.style.display = "none";
-  }
+  // Execute that command in PyScript's Python environment
+  await runPythonAsync(command);
 }
 </script>
 
