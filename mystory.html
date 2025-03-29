@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Story</title>
+  <!-- Reference your existing stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- 
+    1) Banner with alternate background image, 
+       text placed top-left
+  -->
+  <header class="banner banner-mystory">
+    <!-- You already have .banner-content 
+         but add a .banner-alt-content wrapper if needed. 
+         Or simply reuse .banner-content if you like. -->
+    <div class="banner-content banner-mystory-content">
+      <div class="banner-text">
+        <h1>More about me</h1>
+        <p>
+            It's always a fun, though often fruitless task to try and pinpoint the origin of someone's story.
+            It's usually some combination of situation and temperament, and I'm not sure which one
+            holds more true for me.
+        </p>
+        <p>
+            For me, my story technically starts in foster care in the state of Connecticut, but
+            if I really had to pick a moment where things started to make some semblance of sense, it would be here.
+        </p>
+        <p>
+            On a random backroad in central Florida, just far enough away from excessive light pollution and 
+            most likely worrying the residents of the nearby home with my eery presence in the middle of the street, this was my first
+            time ever seeing what I would come to understand as the core of the galaxy we inhabit.
+        </p>
+        <p>
+            For the longest time, I just called this the Milky Way, and I had no clue how much this 
+            scene would come to mean to me.
+        </p>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- 
+    2) Two-column section with two large paragraphs.
+       Reuse your existing classes if you wish, 
+       or create something like:
+         .two-column { display: flex; }
+         .two-column .column { flex: 1; padding: ... }
+  -->
+  <div class="two-column">
+    <div class="column">
+      <p>
+        At the time, I had been working in a warehouse and dabbling in some product photography
+        for the same company, though my experience with photography had actually began a year 
+        earlier when I got my first DSLR.
+      </p>
+      <p>
+        That first camera became mine for the sole reason of taking pictures of my first new car, my 
+        beloved Mini that I eventually drove across country and that still gets me around today. 
+      </p>
+      <p>
+        Gradually, my interests broadened from taking photos of my car at sunset into taking photos of the 
+        sunsets themselves, which were an undeniably gorgeous feature of that sweaty corner of the state.  
+      </p>
+    </div>
+    <div class="column">
+      <p>
+        My first photos were extremely hit or miss, and I have about 100 gigabytes of photos from that original
+        DSLR to prove it. But, the dynamic sunsets and easy beach access made it quite easy to begin learning the basics
+        on my own while avoiding total discouragement. 
+      </p>
+      <p>
+        Eventually, I began using the camera enough that I was bumping up against its limits quite frequently.
+        I saved up for a while, and made a modest upgrade to a more modern DSLR camera. (For those camera curious,
+        it was from a Nikon D5200 to a D500)
+      </p>
+
+    </div>
+  </div>
+<!-- Rotating gallery of images-->
+
+
+
+<div class="gallery-container">
+    <div class="arrow left">&#10094;</div>
+    <div class="image-container">
+      <!-- Three images preloaded; only the first image is visible initially -->
+      <img src="images/minicooper.jpg" alt="Gallery Image 1">
+      <img src="images/capecoralpier.jpg" alt="Gallery Image 2" class="active">
+      <img src="images/pineislandlake.jpg" alt="Gallery Image 3">
+      <img src="images/wilmington.jpg" alt="Gallery Image 4">
+      <img src="images/georgia.jpg" alt="Gallery Image 5">
+    </div>
+    <div class="arrow right">&#10095;</div>
+  </div>
+
+  <!-- Include the external JavaScript file -->
+  <script src="gallery.js"></script>
+
+<!-- Two column #2-->
+
+<div class="two-column">
+    <div class="column">
+      <p>
+        Trying to make sure that the small fortune I had saved for the new camera 
+        didn't go to waste, 
+        I embarked on a challenge I had just recently seen someone else do, 
+        called "Project 365".
+      </p>
+      <p>
+        It was obviously an optimistic goal, but I did see some rapid improvement 
+        in my understanding of the basics, and it resulted in some of my favorite 
+        images to this day.
+      </p>
+    </div>
+  
+    <div class="column">
+
+  
+      <!-- Place the gallery here in the right column -->
+      <div class="gallery-container">
+        <div class="arrow left">&#10094;</div>
+        <div class="image-container">
+          <img src="images/minicooper.jpg" alt="Gallery Image 1">
+          <img src="images/capecoralpier.jpg" alt="Gallery Image 2" class="active">
+          <img src="images/pineislandlake.jpg" alt="Gallery Image 3">
+          <img src="images/wilmington.jpg" alt="Gallery Image 4">
+          <img src="images/georgia.jpg" alt="Gallery Image 5">
+        </div>
+        <div class="arrow right">&#10095;</div>
+      </div>
+      <!-- end of gallery -->
+    </div>
+  </div>
+
+  <section class="fullwidth-image-16x9">
+    <img src="images/puntagordapier.jpg" alt="Descriptive Alt Text">
+  </section>
+  
+  <div class="two-column">
+    <div class="column">
+        <p>
+            I really got some wind in my sails when I had a few images featured in a calendar
+            put together by a local newspaper. From there, I began finding ways that I could 
+            turn this interest into a career.
+        </p>
+    </div>
+    <div class="column">
+      <p>
+        It wasn't long until I upgraded my camera once more, and began pursuing real work. I began 
+        working with some really talented folks in Southwest Florida.   
+      </p>
+      <p>
+        This was at the tail end of my "Project 365", and I really began to hit my stride.
+      </p>
+    </div>
+  </div>
+
+<!-- 8x12 vertical with image slider-->
+<section class="eight-twelve-section">
+    <!-- Left: Text Column -->
+    <div class="eight-twelve-text">
+      <h2>Project 365: A Year in Photos</h2>
+      <p>
+        Over the course of a year, I challenged myself to capture one photo every day using an 8×12 format.
+        This project not only honed my skills but also gave me a new perspective on the beauty of everyday moments.
+      </p>
+    </div>
+    
+    <!-- Right: Slider Column -->
+    <div class="eight-twelve-slider">
+      <div class="slider-container" id="eighttwelve-slider">
+        <!-- Slide 1 -->
+        <div class="slide active">
+          <img src="images/blurrybeach.jpg" alt="Photo 1">
+        </div>
+        <!-- Slide 2 -->
+        <div class="slide">
+          <img src="images/pineislandpier.jpg" alt="Photo 2">
+        </div>
+        <!-- Slide 3 -->
+        <div class="slide">
+          <img src="images/fortmyersguitar.jpg" alt="Photo 3">
+        </div>
+        <!-- Add additional slides as needed -->
+      </div>
+      <!-- Optional: Slider Arrows -->
+      <div class="slider-arrows">
+        <div class="arrow left">&#10094;</div>
+        <div class="arrow right">&#10095;</div>
+      </div>
+    </div>
+    <script src="gallery.js"></script>
+  </section>
+
+  
+  <!-- 
+    3) Alternating left/right images. 
+       - The images span 3/4 width of the page.
+       - Text is on the opposite side, aligned to left or right.
+       Here, we can reuse your .vertical-container and .vertical-item 
+       with minimal overrides, plus add classes for alignment.
+  -->
+  <div class="vertical-container my-story-alternating">
+
+
+  <!-- Reuse your existing footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p class="footer-name">© 2025 Your Name</p>
+      <p class="footer-contact">
+        Email: <a href="mailto:you@example.com">you@example.com</a><br>
+        GitHub: <a href="https://github.com/yourprofile">github.com/yourprofile</a>
+      </p>
+      <p class="footer-note">
+        Built with HTML, CSS, and JavaScript
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
