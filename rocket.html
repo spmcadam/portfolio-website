@@ -4,80 +4,211 @@
   <meta charset="UTF-8">
   <title>Rocket Simulation Demo</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Load Pyodide from the recommended CDN -->
+  <!-- Load Pyodide  -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js"></script>
 </head>
+
 <body>
 
-<!-- Intro -->
+    <!-- Top menu -->
+<nav class="top-menu">
+  <div class="menu-container">
+
+    <!-- Menu links on the left -->
+    <ul class="menu-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="coding.html">Coding</a></li>
+      <li><a href="photos.html">Photos</a></li>
+      <li><a href="writing.html">Writing</a></li>
+    </ul>
+    <!-- Contact info stacked vertically on the right -->
+    <div class="contact-info">
+      <a href="mailto:spmcadam57@gmail.com">spmcadam57@gmail.com</a>
+      <a href="https://github.com/spmcadam" target="_blank">github.com/spmcadam</a>
+    </div>
+
+  </div>
+</nav>
+
+<!-- Intro, image on left text on right -->
 <section class="about-me">
+
   <div class="about-image">
     <img src="images/starship.png" alt="About Me">
   </div>
+
   <div class="about-content">
-    <h2>Getting Starship to orbit</h2>
+
+    <h1>Getting a rocket to orbit</h1>
     <p>
       This page is from a project inspired by chapter 1 of "Computational Physics", a book 
       we'll be working out of for the class of the same name in my last year of the Physics
-      BS program.
+      BS program. 
     </p>
     <p>
-      The code began as a simple 1D example where a rocket takes off and flies purely upward. 
-      It consisted of only "for" loops in Python and originally just used equations of motion 
-      with known parameters for Starship.   
-    </p>
-    <p>
-      I then increased the complexity of the simulation, adding in elements for aerodynamic drag 
-      and moved to 2D. I also added in the stage separation event, and created separate events 
-      for the stage 2 initial burn, coast phase, and insertion burn. 
-    </p>
-    <p>
-      The last piece was moving to 3D, which for the sake of keeping the codebase slim, I've only 
-      included that portion here. At this current stage, the parameters are currently limited to 
-      what I've found to be the most sensitive to changes. 
+      In it's current state, the interactivity is limited to just modifying 
+      a few flight parameters like how long the engines are lit for. But, for the near future,
+      I plan to add:
     </p>
     <li>
-      <strong>Vertical velocity before pitch change:</strong> how much the vertical velocity to gain from launch until
-      the rocket begins pitching over. 
+      <strong>Interactive 3D plot:</strong> drag and drop functionality for the orbital trajectories. 
     </li>
     <li>
-      <strong>Percentage of dV for stage 2:</strong> controls how much dV is spent for the initial 
-      stage 2 burn. The remainder will be spent after the specified coast time.
+      <strong>Payload selector:</strong> see the effects of adding mass to a spacecraft by computing the highest possible
+      orbit for a given payload.
     </li>
-    <li>
-      <strong>Coast time:</strong> how long is spent between the two burns of the second stage.
-    </li>
-    <p>
-      Below the simulation, I walk through the steps of putting this code together, and the 
-      physical consequences of each input.
-    </p>
-        <!-- Simulation parameters integrated into the about-me section -->
-        <div class="rocket-params">
-          <div class="param-row">
-            <label for="vert_v0">Vertical velocity before pitching over(m/s):</label>
-            <input type="number" id="vert_v0" value="25" step="1" />
-          </div>
-          <div class="param-row">
-            <label for="perc_burntime2">% dV for stage 2 burn 1:</label>
-            <input type="number" id="perc_burntime2" value="0.65" step="1" />
-          </div>
-          <div class="param-row">
-            <label for="coast_time">Coast time between stage 2 burns (s):</label>
-            <input type="number" id="coast_time" value="60" step="1" />
-          </div>
-          <button id="runButton" onclick="runSimulation()" disabled>Run Simulation</button>
-        </div>
-  </div>
 
+  </div>
+ 
 </section>
 
+<!-- Vertical containers for project descriptions -->
+<div class="vertical-left-container">
 
-<!-- Container where the plot image will be inserted -->
-<div id="plot-container">
-  <!-- The generated <img> tag will be inserted here -->
+  <!-- Row 1-->
+  <section class="vertical-left-item" id="starship-project">
+
+    <div class="vertical-left-text">
+      <h3>
+        Project background:
+      </h3>
+      <p>
+        The code began as a simple 1D example where a rocket takes off and flies purely upward. 
+        It consisted of only "for" loops in Python and originally just used equations of motion 
+        with known parameters for Starship.   
+      </p>
+      <p>
+        I then increased the complexity of the simulation, adding in elements for aerodynamic drag 
+        and moved to 2D. I also added in the stage separation event, and created separate events 
+        for the stage 2 initial burn, coast phase, and insertion burn. 
+      </p>
+    </div>
+
+    <div class="vertical-slider">
+      <div class="slider-container" id="coding-slider">
+            <div class="slide active">
+              <img src="images/orbital.png" alt="Coding Slide 1">
+            </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Row 2-->
+  <section class="vertical-left-item" id="starship-project">
+    <div class="vertical-left-text">
+      <h3>
+        How the trajectory is calculated
+      </h3>
+      <p>
+        The nominal flight path to a particular orbit is currently above my paygrade, so for now the 
+        flight path is calculated via the following steps:
+      </p>
+      <li>
+        Stage 1 follows a gravity turn trajectory, with the thrust vector set to minimize gravity losses.
+      </li>
+      <li>
+        Stage 2 is separated into 2 different burns, and a coast phase. The first burn is to gain enough 
+        altitude, and reaches a perpendicular thrust vector by the end of the burn. The second burn is to circularize, 
+        and burns perpendicular to Earth surface for the entire duration.
+      </li>
+    </div>
+    <div class="vertical-left-text">
+      <h3>
+          Known deficiencies:
+      </h3>
+      <p>
+        This is still very much a work in progress. Currently, the selectable parameters 
+        are not particularly illustrative of the complexities of getting the rocket to orbit.
+      </p>
+      <p>
+        The simulation itself is lacking a meaningful control of pitch direction,
+        as it uses simplistic angle-changes to change direction. That makes it limited
+        to just the one orbital inclination for now.
+        The aerodynamic model is also
+        most likely underestimating the contribution of drag at hypersonic speeds. 
+      </p>
+    </div>
+  </section>
+</div> 
+
+
+
+<!-- Vertical container for section with control panel-->
+<div class="vertical-left-container">
+  <section class="vertical-left-item" id="starship-project">
+
+    <!-- Parameter descriptions-->
+    <div class="vertical-left-text">
+      <h3>
+        Explanation of parameters:
+      </h3>
+      <li>
+        <strong>Vertical velocity before pitch change:</strong> how much the vertical velocity to gain from launch until
+        the rocket begins pitching over. 
+      </li>
+      <li>
+        <strong>Percentage of dV for stage 2:</strong> controls how much dV is spent for the initial 
+        stage 2 burn. The remainder will be spent after the specified coast time.
+      </li>
+      <li>
+        <strong>Coast time:</strong> how long is spent between the two burns of the second stage.
+      </li>
+      <p>
+        Below the simulation, I walk through the steps of putting this code together, and the 
+        physical consequences of each input.
+      </p>
+    </div>
+
+    <!-- Control panel-->
+    <div class="rocket-params">
+
+      <div class="param-row">
+        <h1>
+          Input Parameters
+        </h1>
+      </div>
+
+      <div class="param-row">
+        <label for="vert_v0">Vertical velocity before pitching over(m/s):</label>
+        <input type="number" id="vert_v0" value="25" step="1" />
+      </div>
+
+      <div class="param-row">
+        <label for="perc_burntime2">% dV for stage 2 burn 1:</label>
+        <input type="number" id="perc_burntime2" value="0.65" step="1" />
+      </div>
+
+      <div class="param-row">
+        <label for="coast_time">Coast time between stage 2 burns (s):</label>
+        <input type="number" id="coast_time" value="60" step="1" />
+      </div>
+
+      <button id="runButton" onclick="runSimulation()" disabled>Run Simulation</button>
+    </div>
+
+  </section>
 </div>
 
+<!-- Container for generated plot -->
+<div id="plot-container">
+</div>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <p class="footer-name">© 2025 Sean McAdam</p>
+    <p class="footer-contact">
+      Email: <a href="mailto:your.email@example.com">spmcadam57@gmail.com</a><br>
+      GitHub: <a href="https://github.com/spmcadam" target="_blank" rel="noopener noreferrer">github.com/spmcadam</a>
+    </p>
+    <p class="footer-note">
+      Built with HTML, CSS, and JavaScript 
+    </p>
+  </div>
+</footer>
+
+
 <script>
+
 // Initialize Pyodide, load required packages, and then load rocket.py into the global namespace
 async function initPyodide() {
   // Load Pyodide and assign the instance globally
@@ -86,11 +217,11 @@ async function initPyodide() {
   // Load the required packages
   await window.pyodideInstance.loadPackage(["numpy", "pandas", "matplotlib"]);
   
-  // Fetch rocket.py from your server and run its code so that its definitions become global
+  // Fetch rocket.py from server and run so its definitions become global
   let rocketCode = await (await fetch("rocket.py")).text();
   window.pyodideInstance.runPython(rocketCode);
 
-  // Enable the run button now that everything is loaded
+  // Enable the run button when everything is loaded
   document.getElementById("runButton").disabled = false;
 
 }
@@ -119,6 +250,9 @@ js.document.getElementById("plot-container").innerHTML = result
   await window.pyodideInstance.runPythonAsync(command);
 }
 </script>
+
+<script src="topmenu.js"></script>
+
 
 </body>
 </html>

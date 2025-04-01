@@ -2,110 +2,109 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Portfolio</title>
+  <title>Home</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <header class="banner">
-        <!-- This container holds both the main text and the contact info -->
-        <div class="banner-content">
-          <!-- Main intro text (left side) -->
-          <div class="banner-text">
-            <h1>Hello, I'm Sean.</h1>
-            <p>
-              I’ll be graduating in June 2025 with a Physics BS and two years of experience in astrophysics research.
-            </p>
-            <p>
-              The purpose of all this is to highlight some of the things I've accomplished, or am actively working on.
-              It's mainly some writing and coding projects, but also photos from my foray as a photographer and the site itself. 
-            </p>
-            <p>
-              If you have any questions about
-              what you find, please reach out using the contact information to the right! 
-            </p>
-          </div>
+<!-- Top menu -->
+<nav class="top-menu">
+  <div class="menu-container">
+
+    <!-- Menu links on the left -->
+    <ul class="menu-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="coding.html">Coding</a></li>
+      <li><a href="photos.html">Photos</a></li>
+      <li><a href="writing.html">Writing</a></li>
+    </ul>
+
+    <!-- Contact info stacked vertically on the right -->
+    <div class="contact-info">
+      <a href="mailto:spmcadam57@gmail.com">spmcadam57@gmail.com</a>
+      <a href="https://github.com/spmcadam" target="_blank">github.com/spmcadam</a>
+    </div>
+
+  </div>
+</nav>
+
+<!-- Banner -->
+<header class="banner" data-bg="images/firstmilkyway.jpg">
+
+  <div class="banner-content">
+    <div class="banner-text">
+
+      <h1>Hello, I'm Sean.</h1>
+      <p>
+        I’ll be graduating in June 2025 with a Physics BS and two years of experience in astrophysics research.
+      </p>
+      <p>
+        The purpose of this site, aside from building experience with getting my Python programs to work within an HTML/CSS website,
+        is to highlight some of the things I've accomplished.
+      </p>
+      <p>
+        You'll mainly find some coding projects and writing, but also photos from my time as a photographer. 
+        All of the photos, video, and code 
+        on this site are my own.
+      </p>
+      <p>
+        If you have any questions about
+        what you find, please reach out using any of the contact information listed. 
+      </p>
       
-          <!-- Contact info (right side) -->
-          <div class="banner-contact">
-            <p>Email: <a href="mailto:spmcadam57@gmail.com">spmcadam57@gmail.com</a></p>
-            <p>GitHub: <a href="https://github.com/spmcadam" target="_blank">github.com/spmcadam</a></p>
-          </div>
+    </div>
+  </div>
+
+</header>
+
+<!-- Three cards for coding, photos and writing -->
+<div class="three-card-grid">
+  
+  <!-- Card 1-->
+  <section class="three-card-item">
+      <div class="slider-container" id="photo-slider">
+        <div class="slide active">
+          <img src="images/starshiporbit.png" alt="Photo Slide 1">
         </div>
-      </header>
-
-
-
-  <!-- 
-    Links with sliders
-  -->
-
-  <!-- Vertical container -->
-  <div class="vertical-container">
-
-    <!-- 1) CODING ITEM -->
-    <section class="vertical-item">
-      <div class="vertical-text">
-        <h2>Coding</h2>
-        <p>A growing collection of projects I've put together in Python.</p>
-        <a href="coding.html" class="vertical-link">Go to coding</a>
-      </div>
-      <div class="vertical-slider">
-        <div class="slider-container" id="coding-slider">
-            <div class="slider-container" id="coding-slider">
-                <!-- Slide #1 -->
-                <div class="slide active">
-                  <img src="images/starshiporbit.png" alt="Coding Slide 1">
-                  <a href="rocket.html" class="slide-button">Calculating Starship's Orbit</a>
-                </div>
-                <!-- Slide #2 -->
-                <div class="slide">
-                  <img src="images/membershipcomparison.png" alt="Coding Slide 2">
-                  <a href="coding-project.html" class="slide-button">Cluster Star Memberships</a>
-                </div>
-              </div>
+        <div class="slide">
+          <img src="images/membershipcomparison.png" alt="Photo Slide 2">
         </div>
       </div>
-    </section>
+    <h2>Coding Projects</h2>
+    <p>A growing collection of projects I've put together in Python.</p>
+    <a href="coding.html">See projects</a>
+  </section>
 
-    <!-- 2) PHOTOGRAPHY ITEM -->
-    <section class="vertical-item">
-        <div class="vertical-text">
-          <h2>Photography</h2>
-          <p>Some photos from Florida, Washington, and a few places in between.</p>
-          <a href="photos.html" class="vertical-link">Go to photos</a>
-        </div>
-        <div class="vertical-slider">
-          <div class="slider-container" id="photo-slider">
-            <img src="images/puntagordapier.jpg" class="slide active" alt="Photo Slide 1">
-            <img src="images/seattlefromkerry.jpg" class="slide" alt="Photo Slide 2">
-            <img src="images/codysbike.jpg" class="slide" alt="Photo Slide 3">
-            <img src="images/enumclawhorse.jpg" class="slide" alt="Photo Slide 4">
-          </div>
-        </div>
-      </section>
+  <!-- Card 2-->
+  <section class="three-card-item">
+    <img src="images/pencilpaper2.png" alt="Example Image 3"> <!-- png instead of slider-->
+    <h2>Writing</h2>
+    <p>Presentations, user manuals and essays.</p>
+    <a href="writing.html">Coming soon</a>
+  </section>
 
-    <!-- 3) WRITING ITEM -->
-    <section class="vertical-item">
-      <div class="vertical-text">
-        <h2>Writing and other media</h2>
-        <p>Presentations, user manuals and essays.</p>
-        <a href="writing.html" class="vertical-link">Coming soon</a>
+  <!-- Card 3-->
+  <section class="three-card-item">
+    <div class="slider-container" id="photo-slider">
+      <div class="slide active">
+        <img src="images/puntagordapier.jpg" alt="Photo Slide 1">
       </div>
-      <div class="vertical-slider">
-        <div class="slider-container" id="writing-slider">
-          <img src="images/sanibelatnight.jpg" class="slide active" alt="Writing Slide 1">
-        </div>
+      <div class="slide">
+        <img src="images/seattlefromkerry.jpg" alt="Photo Slide 2">
       </div>
-    </section>
+      <div class="slide">
+        <img src="images/sanibelatnight.jpg" alt="Photo Slide 2">
+      </div>
+    </div>
+    <h2>Photos</h2>
+    <p>Some photos from Florida, Washington, and a few places in between.</p>
+    <a href="photos.html">See photos</a>
+  </section>
 
+</div>
 
-  </div><!-- .vertical-container -->
-
-
-
-  <!-- About Me Section -->
+<!-- About Me Section -->
 <section class="about-me">
   <div class="about-image">
     <img src="images/selfie.jpg" alt="About Me">
@@ -113,11 +112,11 @@
   <div class="about-content">
     <h2>About Me</h2>
     <p>
-      I'm an undergaduate astrophysics researcher, coder, and former photographer.
+      I'm an undergaduate astrophysics researcher at Western Washington University, junior programmer, and former photographer.
     </p>
     <p>
-      Over the years of earning my Physics BS, I've had the fortune of working just about every
-      position that I could within the department.  
+      Over the years of earning my Physics BS, I've had the fortune of filling a variety 
+      of roles within the department.
     </p>
     <p>
       I've worked as a teaching assistant in a variety of
@@ -128,24 +127,24 @@
     </p>
     <p>
       At the end of this journey at Western, I'm proudly walking away with a solid foundation of understanding of
-      the physics that govern our universe, a knack for communicating complex topics to a wide variety
-      of people, and some deeply enriching experience in filling the various 
-      roles of the department.
+      the physics that govern our universe, a great deal of experience in communicating complex topics to a wide variety
+      of people, and some deeply enriching experience through wearing as many hats as I could around the department.
     </p>
     <p>
       If you're interested in reaching out to me for more information, please use any of the contact methods provided below.
-      If you have some time and want to see some pretty pictures while learning more about how I made it from photography to
-      physics, follow the link below.
     </p>
+
+    <!--     
+    If you have some time and want to see some pretty pictures while learning more about how I made it from photography to
+      physics, there's more words behind the link below.
     <div class="button-container">
       <a href="mystory.html" class="vertical-link">My story</a>
     </div>
+    -->
+
   </div>
 
 </section>
-
-
-<script src="slider.js"></script>  <!-- Link to slider javascript -->
 
 <footer class="site-footer">
     <div class="footer-container">
@@ -160,6 +159,19 @@
     </div>
 </footer>
 
+<!-- Links for slider and menu JS-->
+<script src="slider.js"></script>  
+<script src="topmenu.js"></script>
+
+<!-- Script for background selector -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const banner = document.querySelector('.banner');
+    if (banner && banner.dataset.bg) {
+      banner.style.backgroundImage = `url(${banner.dataset.bg})`;
+    }
+  });
+</script>
 
 </body>
 </html>

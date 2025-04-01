@@ -5,34 +5,61 @@
     <title>Photos</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header class="banner">
-    <!-- This container holds both the main text and the contact info -->
-    <div class="banner-content">
-        <!-- Main intro text (left side) -->
-        <div class="banner-text">
-        <h1>Here's some photos of mine that I've taken over the years.</h1>
-        <p>
-            For some time, I was on my way to becoming a full-time photographer.
-            Unfortunately, (but also fortunately), a global pandemic made it quite
-            difficult to continue. That's where I took the most logical next step,
-            and began pursuing a bachelors degree in physics.
-        </p>
-        <p>
-            On the plus side, I've kept hundreds of gigabytes of photos from over the years.
-            They're just gathering digital dust, so I figured I'd host some of
-            the photos here for folks to see.
-        </p>
+<nav class="top-menu">
+  <div class="menu-container">
+
+    <!-- Menu links on the left -->
+    <ul class="menu-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="coding.html">Coding</a></li>
+      <li><a href="photos.html">Photos</a></li>
+      <li><a href="writing.html">Writing</a></li>
+    </ul>
+
+    <!-- Contact info stacked vertically on the right -->
+    <div class="contact-info">
+      <a href="mailto:spmcadam57@gmail.com">spmcadam57@gmail.com</a>
+      <a href="https://github.com/spmcadam" target="_blank">github.com/spmcadam</a>
     </div>
+
+  </div>
+</nav>
+
+<!-- Banner with intro text over photo-->
+<header class="photos-banner">
+  <div class="photos-banner-content">
+
+    <div class="photos-banner-text">
+    <h1>Here's some photos of mine that I've taken over the years.</h1>
+    <p>
+        For some time, I was on my way to becoming a full-time photographer. But, 
+        a global pandemic made it quite difficult to continue. 
+        That's when I took the most logical next step,
+        and began pursuing a bachelors degree in physics.
+    </p>
+    <p>
+        From that part of my story, I've gathered terabytes of photos from over the years.
+        They're just gathering digital dust, so I figured I'd host some of
+        the photos here for folks to see.
+    </p>
+    
+  </div>
 </header>
 
+<!-- 4-card photo categories, with white bar to delineate-->
+<div class="categories-wrapper">
+  <div class="white-bar"></div>
+
   <div class="categories">
+
     <div class="category" style="background-image:url('images/rainierfromlake.jpg')">
       <div class="category-content">
         <h3>Nature</h3>
         <p>Mostly just big rocks and beaches.</p>
-        <button>View Collection</button>
+        <a href="nature.html" class="slide-button">View Collection</a>
       </div>
     </div>
 
@@ -40,7 +67,7 @@
       <div class="category-content">
         <h3>People</h3>
         <p>Some portraits of some folks.</p>
-        <button>View Collection</button>
+        <a href="people.html" class="slide-button">View Collection</a>
       </div>
     </div>
 
@@ -48,36 +75,46 @@
       <div class="category-content">
         <h3>Automotive</h3>
         <p>Anything with wheels and a motor.</p>
-        <button>View Collection</button>
+        <a href="auto.html" class="slide-button">View Collection</a>
       </div>
     </div>
 
     <div class="category" style="background-image:url('images/evergladesatnight.jpg')">
       <div class="category-content">
         <h3>Low-Light</h3>
-        <p>Pretending not to be afraid of the dark.</p>
-        <button>View Collection</button>
+        <p>Stars and lightpainting.</p>
+        <a href="nighttime.html" class="slide-button">View Collection</a>
       </div>
     </div>
+
   </div>
 
-<div class="slider-container full-width-slider">
-    <div class="slide active">
-        <img src="images/puntagordapier.jpg" alt="Slide 1">
-    </div>
-    <div class="slide">
-        <img src="images/catbywindow.jpg" alt="Slide 2">
-    </div>
-    <div class="slide">
-        <img src="images/naplesferrari.jpg" alt="Slide 3">
-    </div>
-    <div class="slide">
-        <img src="images/jimmyinmangroves.jpg" alt="Slide 4">
-    </div>
-    <div class="slide">
-        <img src="images/puddlehunting.jpeg" alt="Slide 5">
-    </div>
+  <div class="white-bar"></div>
 </div>
+
+<!-- Full width image slider-->
+<div class="slider-container full-width-slider">
+
+    <div class="slide active">
+        <img src="images/picturelakeatnight.jpg" alt="Slide 1">
+    </div>
+    <div class="slide">
+        <img src="images/catonwindowsill.jpg" alt="Slide 2">
+    </div>
+    <div class="slide">
+        <img src="images/subaruwrxatnight.jpg" alt="Slide 3">
+    </div>
+    <div class="slide">
+        <img src="images/jimmyinthemangroves.jpg" alt="Slide 4">
+    </div>
+    <div class="slide">
+        <img src="images/steelwool2.jpg" alt="Slide 5">
+    </div>
+
+</div>
+
 <script src="slider.js"></script>
+<script src="topmenu.js"></script>
+
 </body>
 </html>
