@@ -21,6 +21,7 @@
 body {
     background-color: var(--color-bg); 
     padding-top: 60px; /* room for top menu */
+    overflow-x: hidden;
   }
 
 p {
@@ -48,6 +49,12 @@ ul {
 li {
   padding-left: 1.5rem;          
   text-indent: -1.5rem;          /* hanging indent */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Top menu for all pages */
@@ -675,6 +682,7 @@ li {
 /*********************************************
 Image gallery styles
 *********************************************/
+
 /* 4/5 banner section */
 .fourfifths {
   display: flex;
@@ -1040,6 +1048,60 @@ section.twothirds:nth-child(even) {
 .fullwidth-content a:hover {
   color:#c9c9c9;
 } 
+
+
+
+@media (max-width: 1080px) {
+  /* For all flex-based section layouts */
+  .eventhirds,
+  .onehalf,
+  .onethird,
+  .twothirds,
+  .fourfifths {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 0;
+    max-height: none;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    max-height: none;
+    width: 100vw;
+  }
+
+  .eventhirds-panel,
+  .onehalf-image,
+  .onethird-image,
+  .twothirds-image,
+  .fourfifths-image {
+    display: flex;
+    justify-content: center;
+    flex: none;
+    max-width: 100%;
+  }
+
+  .eventhirds-panel img,
+  .onehalf-image img,
+  .onethird-image img,
+  .twothirds-image img,
+  .fourfifths-image img {
+    margin-left: auto;
+    margin-right: auto;
+    max-height: none;
+    max-width:100%;
+  }
+  .twothirds-image,
+  .onehalf-image {
+    flex-direction: column;
+    gap: 3rem;
+  }
+}
+
+  /* Center the image panels themselves */
+
+
+
+
 /* Three columns with images, text and button */
 .three-card-grid {
   display: flex;               
