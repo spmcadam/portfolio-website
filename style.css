@@ -118,10 +118,11 @@ li {
   /* Reset margin */
   .menu-links {
     margin-left: 0;
+    gap: 50px;
   }
   /* Increase font size of links */
   .menu-links li a {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 }
 
@@ -135,7 +136,8 @@ li {
     background-size: cover;
     background-position: bottom center;
     color: white;
-    padding: 2rem 1rem;
+    padding: 2rem 2rem;
+    padding-bottom: 0rem;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -213,10 +215,15 @@ li {
       flex-direction: column;
       margin-left:auto;
       margin-right: auto;
-      align-items: center; 
+      align-items: center;
     }
-    .banner-text, .banner-contact {
+    .banner-text {
       text-align: center; 
+      min-width:200px;
+      max-width:600px; 
+    }
+    .banner-text p {
+      font-size:1.5rem;
     }
   }
 
@@ -1088,6 +1095,8 @@ section.twothirds:nth-child(even) {
 
 .three-card-item a:hover {
   background: #555;
+  color: var(--color-accent);
+  transition: background 0.3s, color 0.3s;
 }
 
 /* Stack for mobile */
@@ -1097,10 +1106,44 @@ section.twothirds:nth-child(even) {
     align-items: center;
     gap: 0rem;
   }
+
   .three-card-item {
     width: 100%;  
     margin-top: 0;             
     margin-bottom: 0rem;
+  }
+
+  /* Make texts larger for mobile */
+  .three-card-item h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-h2);
+  }
+
+  .three-card-item p {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+  }
+  
+  .three-card-item a {
+    display: inline-block;       
+    text-decoration: none;
+    color: #fff;
+    background: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }
+  
+  .three-card-item a {
+    display: inline-block;       
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    background: #333;
+    padding: 1rem 2rem;
+    border-radius: 4px;
   }
 }
 
@@ -1186,7 +1229,7 @@ Footer
 .site-footer {
   background-color: #333;
   color: #fff;
-  padding: 2rem 1rem;
+  padding: 1rem 0rem;
   text-align: center;
   margin-top: 2rem;
   }
