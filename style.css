@@ -119,6 +119,10 @@ li {
   .menu-links {
     margin-left: 0;
   }
+  /* Increase font size of links */
+  .menu-links li a {
+    font-size: 1.5rem;
+  }
 }
 
 /*********************************************
@@ -476,7 +480,7 @@ li {
   margin-bottom: 1rem;
   color: var(--color-text);
 }
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .about-me {
     flex-direction: column;
     text-align: center;
@@ -1087,14 +1091,16 @@ section.twothirds:nth-child(even) {
 }
 
 /* Stack for mobile */
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   .three-card-grid {
     flex-direction: column;    
     align-items: center;
+    gap: 0rem;
   }
   .three-card-item {
-    width: 100%;               
-    margin-bottom: 2rem;
+    width: 100%;  
+    margin-top: 0;             
+    margin-bottom: 0rem;
   }
 }
 
