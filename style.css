@@ -290,13 +290,79 @@ img {
 /**********************************
  Container styles 
 **********************************/
+/* Overall container style */
+.container {
+  width: 60%;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  box-sizing: border-box;
+  border-radius: 10px;
+  text-align: center;
+}
+
+
+/* Alternating background colors */
+.container:nth-child(odd) {
+  background-color: var(--color-mid);
+}
+.container:nth-child(even) {
+  background-color: var(--color-dark);
+}
+
+/* H1 styling with icon */
+.container h1 {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8em;
+  color: var(--color-h1)
+}
+.container h1 img {
+  margin-right: 10px;
+  width: 100px;  /* adjust size as needed */
+  height: auto;
+}
+
+/* Links container: indented to simulate "tabs" */
+.links {
+  margin-left: 0px;  /* adjust this value to simulate 2-3 tabs */
+  margin-top: 0px;
+}
+
+.links ul {
+  display: inline-block;
+  list-style: disc;
+  list-style-position: inside;
+  text-align: left;
+  color: var(--color-h1);
+  padding-left: 30px; /* ensures space for the bullets */
+}
+
+.links a {
+  display: inline;
+  margin-left: 15px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  color: var(--color-text);
+}
+ 
+.links a:hover{
+  color:var(--color-accent);
+  transition: color 0.3s;
+}
 
 /* Two-column, full-width vertical containers */
 .vertical-container {
     display: flex;
     flex-direction: column;  
     gap: 2rem;              
-    margin: 2rem auto;      
+    margin: 2rem auto;
+    width: 1080px;      
     max-width: 1600px;
     max-height: 800px;      
     padding: 0 1rem;        

@@ -2,84 +2,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Writing projects</title>
+  <title>Alternating Containers Example</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <!-- Top menu -->
+
+      <!-- Top menu -->
 <nav class="top-menu">
-  <div class="menu-container">
-
-    <!-- Menu links on the left -->
-    <ul class="menu-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="coding.html">Coding</a></li>
-      <li><a href="photos.html">Photos</a></li>
-      <li><a href="writing.html">Writing</a></li>
-    </ul>
-
-    <!-- Contact info stacked vertically on the right -->
-    <div class="contact-info">
-      <a href="mailto:spmcadam57@gmail.com">spmcadam57@gmail.com</a>
-      <a href="https://github.com/spmcadam" target="_blank">github.com/spmcadam</a>
+    <div class="menu-container">
+  
+      <!-- Menu links on the left -->
+      <ul class="menu-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="coding.html">Coding</a></li>
+        <li><a href="photos.html">Photos</a></li>
+        <li><a href="writing.html">Writing</a></li>
+      </ul>
+  
+      <!-- Contact info stacked vertically on the right -->
+      <div class="contact-info">
+        <a href="mailto:spmcadam57@gmail.com">spmcadam57@gmail.com</a>
+        <a href="https://github.com/spmcadam" target="_blank">github.com/spmcadam</a>
+      </div>
+  
     </div>
-
-  </div>
-</nav>
-
-  <!-- Banner -->
+  </nav>
+  
+    <!-- Banner -->
 <header class="fullwidthalt-content" data-bg="images/seattlefromsouth.jpg">
-      
+    
     <h1>Writing projects</h1>
 
 </header>
-
+  
 <div class="white-bar"></div>
 
- 
-<!-- Three cards for coding, photos and writing -->
-<div class="three-card-grid">
-  
-  <!-- Card 1-->
-  <section class="three-card-item">
-      <div class="slider-container" id="photo-slider">
-        <div class="slide active">
-          <img src="images/starcluster.png" alt="Photo Slide 1">
-        </div>
-      </div>
-    <h2>Research literature</h2>
-    <p>Presentations, documentation, and guides to my undergraduate research project.
-    </p>
-    <a href="index.html">Coming soon</a>
-  </section>
-
-  <!-- Card 3-->
-  <section class="three-card-item">
-    <div class="slider-container" id="photo-slider">
-      <div class="slide active">
-        <img src="images/orbital.png" alt="Photo Slide 1">
-      </div>
+<div class="container">
+    <h1>
+        <img src="images/starcluster.png" alt="Icon"> Cluster star memberships
+    </h1>
+    <div class="links">
+        <ul>
+            <li>
+                <a href="documents/piecewise_membership_workflow.pdf">Workflow documentation for Python code</a>
+            </li>
+            <li>
+                <a href="documents/MCSR_24.pdf">MCSR Conference poster presentation</a>
+            </li>
+            <li>
+                <a href="documents/MCSR_23.pdf">WWU Scholars Week poster presentation</a>
+            </li>
+            <li>
+                <a href="#">Overview of physical principles (coming soon)</a>
+            </li>
+        </ul>
     </div>
-    <h2>Getting a rocket to orbit</h2>
-    <p>Documentation on the code in its current state, and the process of getting it there.
-    </p>
-    <a href="index.html">Coming soon</a>
-  </section>
-  
-  <section class="three-card-item">
-    <div class="slider-container" id="photo-slider">
-      <div class="slide active">
-        <img src="images/satelliteandearth.png" alt="Photo Slide 1">
-      </div>
-    </div>
-    <h2>Forecasting space traffic</h2>
-    <p>Documentation for my space traffic forecasting project. 
-    </p>
-    <a href="index.html">Coming soon</a>
-  </section>
-
 </div>
+
+<div class="container">
+        <h1>
+            <img src="images/orbital.png" alt="Icon"> Getting a rocket to orbit
+        </h1>
+        <div class="links">
+            <ul>
+                <li>
+                    <a href="#">Workflow documentation (coming soon)</a>
+                </li>
+                <li>
+                    <a href="#">Overview of physical principles (coming soon)</a>
+                </li>
+            </ul>
+        </div>
+</div>
+
+<div class="container">
+    <h1>
+        <img src="images/satelliteandearth.png" alt="Icon"> Forecasting space traffic
+    </h1>
+    <div class="links">
+        <ul>
+            <li>
+                <a href="#">Workflow documentation (coming soon)</a>
+            </li>
+            <li>
+                <a href="#">Overview of physical principles (coming soon)</a>
+            </li>
+        </ul>
+    </div>
+</div>
+ 
 
 <footer class="site-footer">
     <div class="footer-container">
@@ -95,7 +106,7 @@
 </footer>
 
 <script src="topmenu.js"></script>
-<script src="slider.js"></script>  
+<script src="slider.js"></script> 
 
 </body>
 </html>
