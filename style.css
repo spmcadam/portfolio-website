@@ -356,6 +356,38 @@ img {
   transition: color 0.3s;
 }
 
+@media screen and (max-width: 1080px) {
+  .container {
+    width: 90%;         
+    padding: 15px;      
+  }
+
+  .container h1 {
+    font-size: 1.6em;
+  }
+  .container h1 img {
+    width: 80px;        
+  }
+
+  .links {
+    margin-left: 0;
+  }
+
+
+  .links ul {
+    display: block;         
+    padding-left: 20px;     
+    margin: 0 auto;         
+  }
+
+
+  .links a {
+    display: block;
+    width: 80%;
+    margin: 0.5rem auto;    
+  }
+}
+
 /* Two-column, full-width vertical containers */
 .vertical-container {
     display: flex;
