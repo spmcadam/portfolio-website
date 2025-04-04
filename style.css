@@ -292,7 +292,7 @@ img {
 **********************************/
 /* Overall container style */
 .container {
-  width: 60%;
+  width: 600px;
   padding: 20px;
   margin-left: auto;
   margin-right: auto;
@@ -300,19 +300,13 @@ img {
   box-sizing: border-box;
   border-radius: 10px;
   text-align: center;
-}
-
-
-/* Alternating background colors */
-.container:nth-child(odd) {
-  background-color: var(--color-mid);
-}
-.container:nth-child(even) {
   background-color: var(--color-dark);
 }
 
+
 /* H1 styling with icon */
 .container h1 {
+  width: 100%;
   margin: 0;
   padding: 0;
   display: flex;
@@ -335,7 +329,7 @@ img {
 
 .links ul {
   display: inline-block;
-  list-style: disc;
+  list-style: none;
   list-style-position: inside;
   text-align: left;
   color: var(--color-h1);
@@ -345,10 +339,13 @@ img {
 .links a {
   display: inline;
   margin-left: 15px;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
   text-decoration: none;
   color: var(--color-text);
+}
+
+.links li {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
  
 .links a:hover{
@@ -358,7 +355,7 @@ img {
 
 @media screen and (max-width: 1080px) {
   .container {
-    width: 90%;         
+    width: 75%;         
     padding: 15px;      
   }
 
@@ -371,21 +368,30 @@ img {
 
   .links {
     margin-left: 0;
+    margin-bottom: 0.5rem;
   }
-
 
   .links ul {
     display: block;         
     padding-left: 20px;     
     margin: 0 auto;         
+    color: var(--color-dark);
   }
 
-
+  .links ul::first-letter {
+    color: var(--color-h1);
+  }
   .links a {
     display: block;
-    width: 80%;
-    margin: 0.5rem auto;    
+    width: 80%;  
+    margin: 0 auto;  
   }
+
+}
+
+.dot {
+  color: var(--color-h1); /* or any other color */
+  font-weight: bold; /* optional */
 }
 
 /* Two-column, full-width vertical containers */
@@ -1227,11 +1233,6 @@ section.twothirds:nth-child(even) {
   }
 }
 
-  /* Center the image panels themselves */
-
-
-
-
 /* Three columns with images, text and button */
 .three-card-grid {
   display: flex;               
@@ -1259,9 +1260,10 @@ section.twothirds:nth-child(even) {
 }
 
 .three-card-item img {
-  max-width: 100%;
-  height: auto;
-  max-height:200px;
+  width: auto;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 1rem;
   border-radius: 8px;          
 }
