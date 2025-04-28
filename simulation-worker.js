@@ -1,40 +1,48 @@
-/* simulation-worker.js  */
+/* --------------------------------------------------
+   simulation-worker.js
+-------------------------------------------------- */
 
-/* 1.  Load Pyodide */
+/* 1. Load Pyodide */
 importScripts(
     "https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js"
   );
   
-  let pyReady = (async () => {
-    // Create the Pyodide instance
+  const pyReady = (async () => {
     const pyodide = await loadPyodide();
-  
-    // Only bring in the packages you really use
     await pyodide.loadPackage(["numpy", "pandas", "matplotlib"]);
   
-    // Pull in your Python simulation code and execute it
+    // bring your Python code into the worker’s __main__
     const code = await fetch("rocket.py").then(r => r.text());
     pyodide.runPython(code);
   
-    /* 2.  Tell the main thread we are ready */
+    /* Tell the UI we’re alive */
     self.postMessage({ type: "ready" });
-  
     return pyodide;
   })();
   
-  /* 3.  Respond to “run” requests from the UI */
+  /* 2. Run a simulation */
   self.onmessage = async (e) => {
-    if (e.data.type !== "run") return;        // ignore anything else
+    if (e.data.type !== "run") return;
   
-    const { v0, burn, coast } = e.data;
-    const pyodide = await pyReady;
+    try {
+      const { v0, burn, coast } = e.data;
+      const pyodide = await pyReady;
   
-    const imgTag = await pyodide.runPythonAsync(`
+      /* no leading spaces ⇒ no IndentationError */
+      const imgTag = await pyodide.runPythonAsync(`
   from __main__ import run_simulation
   run_simulation(${v0}, ${burn}, ${coast})
   `);
   
-    /* 4.  Send the result back */
-    self.postMessage({ type: "result", imgTag });
+      self.postMessage({ type: "result", imgTag });
+  
+    } catch (err) {
+      /* bubble the error up to the main thread */
+      self.postMessage({
+        type: "error",
+        message: err.message || String(err),
+        stack: err.stack || null
+      });
+    }
   };
   
