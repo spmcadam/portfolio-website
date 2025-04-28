@@ -1407,19 +1407,16 @@ Control panel for rocket simulation
 }
 
 /* Plot container styling */
-#plot-container {
-  margin-top: 2em;
-  text-align: center;
+#plot-container{
+  margin-top:2em;
+  display:flex;              /* let flexbox do the centring */
+  justify-content:center;    /* horizontal centre */
 }
 
-#plot-container img {
-  display: block;
-  width:100%;
-  max-height: 600px;
-  margin: 0 auto;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+#plot-container img{
+  display:block;
+  max-width:100%;            /* never wider than the viewport */
+  height:auto;               /* keep aspect ratio */
 }
 
 /*********************************************
