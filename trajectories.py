@@ -239,7 +239,7 @@ def compare_velocities(planet_name, altitude, vmin, vmax, n_vels):
     # Loop through velocities and plot each trajectory
 
     for v in velocities:
-        (_,_,_,_, xs, ys, _) = run_trajectory(
+        (_, xs, ys, _) = run_trajectory(
             v_r0 = v, 
             planet=planet,
             h0=altitude_m,
