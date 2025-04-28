@@ -34,7 +34,7 @@
 <section class="about-me">
 
   <div class="about-image">
-    <img src="images/starship.png" alt="About Me">
+    <img src="images/orbital.png" alt="About Me">
   </div>
 
   <div class="about-content">
@@ -62,15 +62,13 @@
         Explanation of parameters:
       </h3>
       <li>
-        <strong>Vertical velocity before pitch change:</strong> how much the vertical velocity to gain from launch until
-        the rocket begins pitching over. 
+        <strong>Starting altitude:</strong> Distance above Earth surface to launch object.
       </li>
       <li>
-        <strong>Percentage of dV for stage 2:</strong> controls how much dV is spent for the initial 
-        stage 2 burn. The remainder will be spent after the specified coast time.
+        <strong>Test velocities</strong> Specifies ranges of velocities to be tested.
       </li>
       <li>
-        <strong>Coast time:</strong> how long is spent between the two burns of the second stage.
+        <strong># of test velocities:</strong> How many trajectories to calculate (~15 seconds per trajectory)
       </li>
       <p>
         Below the simulation, I walk through the steps of putting this code together, and the 
@@ -92,7 +90,7 @@
     
       <div class="param-row">
         <label for="alt_km">Starting altitude above surface (km):</label>
-        <input type="number" id="alt_km" value="100" step="1" />
+        <input type="number" id="alt_km" value="100" step="any" />
       </div>
     
       <div class="param-row">
@@ -107,7 +105,7 @@
     
       <div class="param-row">
         <label for="nvels"># test velocities:</label>
-        <input type="number" id="nvels" value="10" step="1" />
+        <input type="number" id="nvels" value="10" step="any" />
       </div>
     
       <button id="runButton" onclick="runSimulation()" disabled>Run simulation</button>
@@ -134,57 +132,79 @@
 
 
 <script>
-
-// Initialize Pyodide, load required packages, and then load rocket.py into the global namespace
-async function initPyodide() {
-  // Load Pyodide and assign the instance globally
-  window.pyodideInstance = await loadPyodide();
+  /* -----------------------------------------------------------
+     trajectories page – main-thread controller
+  ----------------------------------------------------------- */
   
-  // Load the required packages
-  await window.pyodideInstance.loadPackage(["numpy", "pandas", "matplotlib"]);
+  const worker        = new Worker("simulation-worker.js");
+  const runBtn        = document.getElementById("runButton");
+  const plotBox       = document.getElementById("plot-container");
   
-  // Fetch rocket.py from server and run so its definitions become global
-  let trajectorycode = await (await fetch("trajectories.py")).text();
-  window.pyodideInstance.runPython(trajectorycode);
-
-  // Enable the run button when everything is loaded
-  document.getElementById("runButton").disabled = false;
-
-}
-initPyodide();
-
-// Function to run the simulation when the button is clicked
-async function runSimulation() {
-  const btn = document.getElementById("runButton")
-  const originalText = btn.textContent;
-
-  btn.disabled = true;
-  btn.textContent = "Calculating...";
-
-  // Read parameter values from the form
-  const planet    = document.getElementById("planet_sel").value;
-  const alt    = document.getElementById("alt_km").value;
-  const vmin   = document.getElementById("vmin").value;
-  const vmax   = document.getElementById("vmax").value;
-  const nvels  = document.getElementById("nvels").value;
-
-  // Build a multi-line Python command string that calls run_simulation
-  // and then sets the innerHTML of the element with id "plot-container"
-  const command = `
-from __main__ import run_simulation  
-result = run_simulation('${planet}', '${alt}', '${vmin}', '${vmax}', '${nvels}')
-import js
-js.document.getElementById("plot-container").innerHTML = result
-`;
-
-  // Execute the Python code asynchronously using the loaded Pyodide instance
-  await window.pyodideInstance.runPythonAsync(command);
-}
-  btn.textContent = originalText;
-  btn.disabled = false;
-</script>
-
-<script src="topmenu.js"></script>
+  /* grey out the button until the worker is ready */
+  runBtn.disabled = true;
+  
+  /* ----------  Incoming messages from the worker  ---------- */
+  worker.onmessage = (e) => {
+    const m = e.data;
+  
+    switch (m.type) {
+  
+      case "ready":
+        runBtn.disabled = false;
+        break;
+  
+      case "result":
+        plotBox.innerHTML = m.imgTag;
+        restoreButton();
+        break;
+  
+      case "error":
+        plotBox.innerHTML =
+          `<pre style="color:#ff8080">Simulation failed:\n${m.message}</pre>`;
+        console.error("Worker error:", m.stack || m.message);
+        restoreButton();
+        break;
+    }
+  };
+  
+  /* worker-level crash (syntax error, OOM, etc.) */
+  worker.onerror = (evt) => {
+    plotBox.innerHTML =
+      `<pre style="color:#ff8080">Worker crashed:\n${evt.message}</pre>`;
+    console.error("Worker crashed:", evt);
+    restoreButton();
+  };
+  
+  /* ----------  RUN button click handler  ---------- */
+  function runSimulation() {
+    /* pull values from the form */
+    const planet = document.getElementById("planet_sel").value;
+    const alt    = document.getElementById("alt_km").value;
+    const vmin   = document.getElementById("vmin").value;
+    const vmax   = document.getElementById("vmax").value;
+    const nvels  = document.getElementById("nvels").value;
+  
+    /* quick validation */
+    if ([alt, vmin, vmax, nvels].some(v => v === "")) {
+      alert("Please fill in all numeric fields."); return;
+    }
+  
+    /* visual feedback */
+    runBtn.textContent = "Calculating…";
+    runBtn.disabled    = true;
+    plotBox.textContent = "Calculating …";
+  
+    /* send job to worker */
+    worker.postMessage({ type:"run", planet, alt, vmin, vmax, nvels });
+  }
+  
+  /* helper to restore the button text/state */
+  function restoreButton() {
+    runBtn.textContent = "Run Simulation";
+    runBtn.disabled    = false;
+  }
+  </script>
+  
 
 
 </body>
