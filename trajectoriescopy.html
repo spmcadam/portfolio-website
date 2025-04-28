@@ -133,61 +133,77 @@
 </footer>
 
 
-<script>  
+<script>
+  /* -----------------------------------------------------------
+     trajectories page – main-thread controller
+  ----------------------------------------------------------- */
+  
   const worker        = new Worker("simulation-worker.js");
-  const runButton     = document.getElementById("runButton");
-  const plotContainer = document.getElementById("plot-container");
+  const runBtn        = document.getElementById("runButton");
+  const plotBox       = document.getElementById("plot-container");
   
-  runButton.disabled = true;   // stay greyed-out until the worker says “ready”
+  /* grey out the button until the worker is ready */
+  runBtn.disabled = true;
   
-  /* ----------  Messages coming back from the worker  ---------- */
+  /* ----------  Incoming messages from the worker  ---------- */
   worker.onmessage = (e) => {
-    const msg = e.data;
+    const m = e.data;
   
-    switch (msg.type) {
-      case "ready":                // Pyodide + rocket.py fully initialised
-        runButton.disabled = false;
+    switch (m.type) {
+  
+      case "ready":
+        runBtn.disabled = false;
         break;
   
-      case "result":               // simulation finished → imgTag received
-        plotContainer.innerHTML = msg.imgTag;
-        runButton.disabled = false;
+      case "result":
+        plotBox.innerHTML = m.imgTag;
+        restoreButton();
         break;
   
-      case "error":                // simulation raised an exception
-        plotContainer.innerHTML =
-          `<pre style="color:#ff8080">Simulation failed:\n${msg.message}</pre>`;
-        console.error("Worker error:", msg.stack || msg.message);
-        runButton.disabled = false;
+      case "error":
+        plotBox.innerHTML =
+          `<pre style="color:#ff8080">Simulation failed:\n${m.message}</pre>`;
+        console.error("Worker error:", m.stack || m.message);
+        restoreButton();
         break;
     }
   };
   
-  /* ----------  Catch worker-level crashes (syntax error, OOM, etc.)  ---------- */
+  /* worker-level crash (syntax error, OOM, etc.) */
   worker.onerror = (evt) => {
-    plotContainer.innerHTML =
+    plotBox.innerHTML =
       `<pre style="color:#ff8080">Worker crashed:\n${evt.message}</pre>`;
     console.error("Worker crashed:", evt);
-    runButton.disabled = false;
+    restoreButton();
   };
   
-  /* ----------  Triggered when the user clicks the RUN button  ---------- */
+  /* ----------  RUN button click handler  ---------- */
   function runSimulation() {
-    const v0    = parseFloat(document.getElementById("vert_v0").value);
-    const burn  = parseFloat(document.getElementById("perc_burntime2").value);
-    const coast = parseFloat(document.getElementById("coast_time").value);
+    /* pull values from the form */
+    const planet = document.getElementById("planet_sel").value;
+    const alt    = document.getElementById("alt_km").value;
+    const vmin   = document.getElementById("vmin").value;
+    const vmax   = document.getElementById("vmax").value;
+    const nvels  = document.getElementById("nvels").value;
   
-    /* Simple input validation */
-    if ([v0, burn, coast].some(Number.isNaN)) {
-      alert("Please enter valid numeric values for all parameters.");
-      return;
+    /* quick validation */
+    if ([alt, vmin, vmax, nvels].some(v => v === "")) {
+      alert("Please fill in all numeric fields."); return;
     }
   
-    plotContainer.textContent = "Calculating …";
-    runButton.disabled = true;    // keep UI single-threaded
+    /* visual feedback */
+    runBtn.textContent = "Calculating…";
+    runBtn.disabled    = true;
+    plotBox.textContent = "Calculating …";
   
-    /* Hand the job to the worker */
-    worker.postMessage({ type: "run", v0, burn, coast });
+    /* send job to worker */
+    worker.postMessage({ type:"run", planet, alt, vmin, vmax, nvels });
+  }
+  
+  /* helper to restore the button text/state */
+  function restoreButton() {
+    runBtn.textContent = "Run Simulation";
+    runBtn.disabled    = false;
   }
   </script>
   
