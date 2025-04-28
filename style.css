@@ -1409,7 +1409,7 @@ Control panel for rocket simulation
 /* Plot container styling */
 #plot-container {
   margin-top: 2em;
-  text-align: left;
+  text-align: center;
 }
 
 #plot-container img {

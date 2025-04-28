@@ -39,99 +39,18 @@
 
   <div class="about-content">
 
-    <h1>Getting a rocket to orbit</h1>
+    <h1>Single-Impulse Orbital Trajectories</h1>
     <p>
-      This page is from a project inspired by chapter 1 of "Computational Physics", a book 
-      we'll be working out of for the class of the same name in my last year of the Physics
-      BS program. 
+      This page is a continuation of a homework assignment, where I have been tasked with seeing just how fast a cannonball would have to go to make it into orbit from 
+      Earth's surface.
     </p>
     <p>
-      In it's current state, the interactivity is limited to just modifying 
-      a few flight parameters like how long the engines are lit for. But, for the near future,
-      I plan to add:
+      In it's current state, the interactivity is limited to just two planets, and breaks down at very low altitudes due to the simplistic atmospheric density calculation I am using.
     </p>
-    <li>
-      <strong>Interactive 3D plot:</strong> drag and drop functionality for the orbital trajectories. 
-    </li>
-    <li>
-      <strong>Payload selector:</strong> see the effects of adding mass to a spacecraft by computing the highest possible
-      orbit for a given payload.
-    </li>
 
   </div>
  
 </section>
-
-<!-- Vertical containers for project descriptions -->
-<div class="vertical-left-container">
-
-  <!-- Row 1-->
-  <section class="vertical-left-item" id="starship-project">
-
-    <div class="vertical-left-text">
-      <h3>
-        Project background:
-      </h3>
-      <p>
-        The code began as a simple 1D example where a rocket takes off and flies purely upward. 
-        It consisted of only "for" loops in Python and originally just used equations of motion 
-        with known parameters for Starship.   
-      </p>
-      <p>
-        I then increased the complexity of the simulation, adding in elements for aerodynamic drag 
-        and moved to 2D. I also added in the stage separation event, and created separate events 
-        for the stage 2 initial burn, coast phase, and insertion burn. 
-      </p>
-    </div>
-
-    <div class="vertical-slider">
-      <div class="slider-container" id="coding-slider">
-            <div class="slide active">
-              <img src="images/orbital.png" alt="Coding Slide 1">
-            </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Row 2-->
-  <section class="vertical-left-item" id="starship-project">
-    <div class="vertical-left-text">
-      <h3>
-        How the trajectory is calculated
-      </h3>
-      <p>
-        The nominal flight path to a particular orbit is currently above my paygrade, so for now the 
-        flight path is calculated via the following steps:
-      </p>
-      <li>
-        Stage 1 follows a gravity turn trajectory, with the thrust vector set to minimize gravity losses.
-      </li>
-      <li>
-        Stage 2 is separated into 2 different burns, and a coast phase. The first burn is to gain enough 
-        altitude, and reaches a perpendicular thrust vector by the end of the burn. The second burn is to circularize, 
-        and burns perpendicular to Earth surface for the entire duration.
-      </li>
-    </div>
-    <div class="vertical-left-text">
-      <h3>
-          Known deficiencies:
-      </h3>
-      <p>
-        This is still very much a work in progress. Currently, the selectable parameters 
-        are not particularly illustrative of the complexities of getting the rocket to orbit.
-      </p>
-      <p>
-        The simulation itself is lacking a meaningful control of pitch direction,
-        as it uses simplistic angle-changes to change direction. That makes it limited
-        to just the one orbital inclination for now.
-        The aerodynamic model is also
-        most likely underestimating the contribution of drag at hypersonic speeds. 
-      </p>
-    </div>
-  </section>
-</div> 
-
-
 
 <!-- Vertical container for section with control panel-->
 <div class="vertical-left-container">
@@ -236,15 +155,18 @@ initPyodide();
 
 // Function to run the simulation when the button is clicked
 async function runSimulation() {
+  const btn = document.getElementById("runButton")
+  const originalText = btn.textContent;
+
+  btn.disabled = true;
+  btn.textContent = "Calculating...";
+
   // Read parameter values from the form
   const planet    = document.getElementById("planet_sel").value;
   const alt    = document.getElementById("alt_km").value;
   const vmin   = document.getElementById("vmin").value;
   const vmax   = document.getElementById("vmax").value;
   const nvels  = document.getElementById("nvels").value;
-
-  // Display the "Calculating..." message
-  document.getElementById("plot-container").innerHTML = "Calculating...";
 
   // Build a multi-line Python command string that calls run_simulation
   // and then sets the innerHTML of the element with id "plot-container"
