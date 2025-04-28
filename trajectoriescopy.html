@@ -133,52 +133,64 @@
 </footer>
 
 
-<script>
-  // 1) Spin up the worker as soon as the page loads
-  const simWorker = new Worker("simulation-worker.js");
-
-  // 2) Hook up the button
-  document.getElementById("runButton").addEventListener("click", runSimulation);
-
-  async function runSimulation() {
-    const btn = document.getElementById("runButton");
-    const originalText = btn.textContent;
-
-    // disable and indicate work in progress
-    btn.disabled    = true;
-    btn.textContent = "Calculating…";
-    document.getElementById("plot-container").innerHTML = "";
-
-    // collect inputs
-    const planet = document.getElementById("planet_sel").value;
-    const alt    = document.getElementById("alt_km").value;
-    const vmin   = document.getElementById("vmin").value;
-    const vmax   = document.getElementById("vmax").value;
-    const nvels  = document.getElementById("nvels").value;
-
-    // 3) Send the job off to the worker
-    simWorker.postMessage({ planet, alt, vmin, vmax, nvels });
-
-    // 4) When the worker replies, update the UI
-    simWorker.onmessage = (e) => {
-      document.getElementById("plot-container").innerHTML = e.data.imgTag;
-      btn.textContent = originalText;
-      btn.disabled    = false;
-    };
-
-    // (optional) handle worker errors
-    simWorker.onerror = (err) => {
-      console.error("Worker error:", err);
-      btn.textContent = originalText;
-      btn.disabled    = false;
-      document.getElementById("plot-container").innerHTML =
-        "<p style='color:red;'>Simulation failed. Check console.</p>";
-    };
+<script>  
+  const worker        = new Worker("simulation-worker.js");
+  const runButton     = document.getElementById("runButton");
+  const plotContainer = document.getElementById("plot-container");
+  
+  runButton.disabled = true;   // stay greyed-out until the worker says “ready”
+  
+  /* ----------  Messages coming back from the worker  ---------- */
+  worker.onmessage = (e) => {
+    const msg = e.data;
+  
+    switch (msg.type) {
+      case "ready":                // Pyodide + rocket.py fully initialised
+        runButton.disabled = false;
+        break;
+  
+      case "result":               // simulation finished → imgTag received
+        plotContainer.innerHTML = msg.imgTag;
+        runButton.disabled = false;
+        break;
+  
+      case "error":                // simulation raised an exception
+        plotContainer.innerHTML =
+          `<pre style="color:#ff8080">Simulation failed:\n${msg.message}</pre>`;
+        console.error("Worker error:", msg.stack || msg.message);
+        runButton.disabled = false;
+        break;
+    }
+  };
+  
+  /* ----------  Catch worker-level crashes (syntax error, OOM, etc.)  ---------- */
+  worker.onerror = (evt) => {
+    plotContainer.innerHTML =
+      `<pre style="color:#ff8080">Worker crashed:\n${evt.message}</pre>`;
+    console.error("Worker crashed:", evt);
+    runButton.disabled = false;
+  };
+  
+  /* ----------  Triggered when the user clicks the RUN button  ---------- */
+  function runSimulation() {
+    const v0    = parseFloat(document.getElementById("vert_v0").value);
+    const burn  = parseFloat(document.getElementById("perc_burntime2").value);
+    const coast = parseFloat(document.getElementById("coast_time").value);
+  
+    /* Simple input validation */
+    if ([v0, burn, coast].some(Number.isNaN)) {
+      alert("Please enter valid numeric values for all parameters.");
+      return;
+    }
+  
+    plotContainer.textContent = "Calculating …";
+    runButton.disabled = true;    // keep UI single-threaded
+  
+    /* Hand the job to the worker */
+    worker.postMessage({ type: "run", v0, burn, coast });
   }
-</script>
-
-
-<script src="topmenu.js"></script>
+  </script>
+  
 
 
 </body>

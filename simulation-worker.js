@@ -1,32 +1,40 @@
-// simulation-worker.js
+/* simulation-worker.js  */
 
-// 1) Load Pyodide in the worker
-importScripts("https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js");
-
-let pyodideReady = loadPyodide().then(async pyodide => {
-  // load only the packages you actually need
-  await pyodide.loadPackage(["numpy", "matplotlib"]);
-  // fetch & run your trajectories.py so run_simulation is defined
-  const code = await fetch("trajectories.py").then(r=>r.text());
-  pyodide.runPython(code);
-  return pyodide;
-});
-
-// 2) Listen for messages from the main thread
-self.onmessage = async (e) => {
-  const { planet, alt, vmin, vmax, nvels } = e.data;
-  const pyodide = await pyodideReady;
-
-  // 3) Do the simulation off the main thread
-  const imgTag = await pyodide.runPythonAsync(`
-from __main__ import run_simulation
-run_simulation(${JSON.stringify(planet)},
-               ${JSON.stringify(alt)},
-               ${JSON.stringify(vmin)},
-               ${JSON.stringify(vmax)},
-               ${JSON.stringify(nvels)})
-`);
-
-  // 4) Send the <img> back to the UI
-  self.postMessage({ imgTag });
-};
+/* 1.  Load Pyodide */
+importScripts(
+    "https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js"
+  );
+  
+  let pyReady = (async () => {
+    // Create the Pyodide instance
+    const pyodide = await loadPyodide();
+  
+    // Only bring in the packages you really use
+    await pyodide.loadPackage(["numpy", "pandas", "matplotlib"]);
+  
+    // Pull in your Python simulation code and execute it
+    const code = await fetch("rocket.py").then(r => r.text());
+    pyodide.runPython(code);
+  
+    /* 2.  Tell the main thread we are ready */
+    self.postMessage({ type: "ready" });
+  
+    return pyodide;
+  })();
+  
+  /* 3.  Respond to “run” requests from the UI */
+  self.onmessage = async (e) => {
+    if (e.data.type !== "run") return;        // ignore anything else
+  
+    const { v0, burn, coast } = e.data;
+    const pyodide = await pyReady;
+  
+    const imgTag = await pyodide.runPythonAsync(`
+  from __main__ import run_simulation
+  run_simulation(${v0}, ${burn}, ${coast})
+  `);
+  
+    /* 4.  Send the result back */
+    self.postMessage({ type: "result", imgTag });
+  };
+  
