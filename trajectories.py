@@ -1,6 +1,5 @@
 import math
 import numpy as np
-import pandas as pd
 import matplotlib
 matplotlib.use('Agg')  # Use a non-interactive backend for plotting
 import matplotlib.pyplot as plt

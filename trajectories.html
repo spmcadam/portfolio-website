@@ -193,6 +193,8 @@
     
       <button id="runButton" onclick="runSimulation()" disabled>Run simulation</button>
     </div>
+  </section>
+</div>
 
 <!-- Container for generated plot -->
 <div id="plot-container">
@@ -220,7 +222,7 @@ async function initPyodide() {
   window.pyodideInstance = await loadPyodide();
   
   // Load the required packages
-  await window.pyodideInstance.loadPackage(["numpy", "matplotlib"]);
+  await window.pyodideInstance.loadPackage(["numpy", "pandas", "matplotlib"]);
   
   // Fetch rocket.py from server and run so its definitions become global
   let trajectorycode = await (await fetch("trajectories.py")).text();
@@ -235,7 +237,7 @@ initPyodide();
 // Function to run the simulation when the button is clicked
 async function runSimulation() {
   // Read parameter values from the form
-  const planet    = document.getElementById("Planet").value;
+  const planet    = document.getElementById("planet_sel").value;
   const alt    = document.getElementById("alt_km").value;
   const vmin   = document.getElementById("vmin").value;
   const vmax   = document.getElementById("vmax").value;
@@ -254,7 +256,7 @@ js.document.getElementById("plot-container").innerHTML = result
 `;
 
   // Execute the Python code asynchronously using the loaded Pyodide instance
-  await window.pyodideInstance.runPythonAsync(pyCmd);
+  await window.pyodideInstance.runPythonAsync(command);
 }
 </script>
 
