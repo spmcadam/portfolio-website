@@ -1413,8 +1413,10 @@ Control panel for rocket simulation
 }
 
 #plot-container img {
-  max-width: 800px;
-  max-height: auto;
+  display: block;
+  width:100%;
+  max-height: 600px;
+  margin: 0 auto;
   width: auto;
   height: auto;
   object-fit: contain;

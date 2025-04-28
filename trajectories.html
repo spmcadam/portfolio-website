@@ -180,6 +180,8 @@ js.document.getElementById("plot-container").innerHTML = result
   // Execute the Python code asynchronously using the loaded Pyodide instance
   await window.pyodideInstance.runPythonAsync(command);
 }
+  btn.textContent = originalText;
+  btn.disabled = false;
 </script>
 
 <script src="topmenu.js"></script>
