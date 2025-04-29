@@ -13,20 +13,55 @@ mass = 100
 
 # Create dictionary entries for the planets that will be compared
 PLANETS = {
+    "Mercury": {
+        "mu": 2.2031868551e13,
+        "R": 2_440_000,
+        "rho_0": 0,
+        "H": 0
+    },
+    "Venus": {
+        "mu": 3.24858592e14,
+        "R": 6_051_000,
+        "rho_0": 65,
+        "H": 15_900
+    },
     "Earth": {
-        "mu":  3.986004418e14, # gravitational parameter G*M
-        "R": 6_371_000, # m -- planet radius
-        "rho_0": 1.225, # kg/m^3 -- air density at sea level
-        "H": 8400 # scale height for atm. density calculation
+        "mu": 3.98600435507e14,
+        "R": 6_371_000,
+        "rho_0": 1.225,
+        "H": 8_400
     },
     "Mars": {
-        "mu": 4.282837e13,
-        "R":  3_389_500,
+        "mu": 4.2828375816e13,
+        "R": 3_396_200,
         "rho_0": 0.020,
         "H": 11_100
     },
+    "Jupiter": {
+        "mu": 1.267127641e17,
+        "R": 69_911_000,
+        "rho_0": 0.16,
+        "H": 27_000
+    },
+    "Saturn": {
+        "mu": 3.79405848418e16,
+        "R": 58_232_000,
+        "rho_0": 0.19,
+        "H": 59_500
+    },
+    "Uranus": {
+        "mu": 5.7945564e15,
+        "R": 25_362_000,
+        "rho_0": 0.42,
+        "H": 27_700
+    },
+    "Neptune": {
+        "mu": 6.83652710058e15,
+        "R": 24_622_000,
+        "rho_0": 0.45,
+        "H": 19_100
+    }
 }
-
 # ------------Functions----------------
 def accel(state, planet):
     """
