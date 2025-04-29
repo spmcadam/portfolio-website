@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Rocket Simulation Demo</title>
+  <title>Single-Impulse Trajectories</title>
   <link rel="stylesheet" href="style.css">
   <!-- Load Pyodide  -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js"></script>
@@ -41,13 +41,18 @@
 
     <h1>Single-Impulse Orbital Trajectories</h1>
     <p>
-      This page is a continuation of a homework assignment, where I have been tasked with seeing just how fast a cannonball would have to go to make it into orbit from 
-      Earth's surface.
+      Modern space travel has been enabled through the use of multi-stage rockets, 
+      where a large booster stage puts a smaller upper stage on a sub-orbital trajectory, 
+      and the upper stage lights a new set of engines that carries it onward to orbit.
     </p>
     <p>
-      In it's current state, the interactivity is limited to just two planets, and breaks down at very low altitudes due to the simplistic atmospheric density calculation I am using.
+      In order to better understand the trajectories created by a continuous burn of the rocket's engines,
+      I wanted to simplify things and first take a look at what happens if you had to deliver all of the force at one time in a single impulse.
     </p>
-
+    <p>
+      The simulation below computes trajectories for a "cannonball" that has been launched at a certain altitude above 
+      a planet's surface. It accounts for aerodynamic resistance, according to the atmosphere of the specified planet.
+    </p>
   </div>
  
 </section>
@@ -65,16 +70,24 @@
         <strong>Starting altitude:</strong> Distance above Earth surface to launch object.
       </li>
       <li>
-        <strong>Test velocities</strong> Specifies ranges of velocities to be tested.
+        <strong>Lowest/Highest Test velocities</strong> Specifies ranges of velocities to be tested.
       </li>
       <li>
         <strong># of test velocities:</strong> How many trajectories to calculate (~15 seconds per trajectory)
       </li>
       <p>
-        Below the simulation, I walk through the steps of putting this code together, and the 
-        physical consequences of each input.
+        
       </p>
+      <p>
+        Follow the link below to find a full write-up of the physics involved in this simulation, as well as an analysis of how the trajectories 
+        are affected by planetary mass, aerodynamic drag, and altitude.
+      </p>
+
+      <a href="documents/HW2.pdf" class="vertical-left-link">
+        View analysis
+      </a>
     </div>
+    
 
     <!-- Control panel-->
     <div class="rocket-params">
